@@ -9,6 +9,7 @@ namespace Achaman.Localization {
             { "MultiplyRecycledAlloy", "Multiply Recycled Alloy (host-side)" },
             { "JetpackThrustMultiplier", "Jetpack Thrust Multiplier (client-side)" },
             { "JetpackDashForceMultiplier", "Jetpack Dash Force Multiplier (client-side)" },
+            { "JetpackNote", "Note: This must be configured in the Hub to take effect." },
             { "PerkPoints", "Perk points" },
             { "Reset", "Reset" },
             { "LanguageLabel", "Language" }

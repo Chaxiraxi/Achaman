@@ -23,12 +23,14 @@ namespace Achaman {
             }
 
             Label(Language.Current.Get("JetpackThrustMultiplier") + ": " + Settings.JetpackThrustMultiplier);
+            Label(Language.Current.Get("JetpackNote"));
             Settings.JetpackThrustMultiplier = Mathf.Round(HorizontalSlider(Settings.JetpackThrustMultiplier, 0f, 10f) * 10f) / 10f;
             if (Button(Language.Current.Get("Reset"))) {
                 Settings.JetpackThrustMultiplier = Settings.Defaults.JetpackThrustMultiplier;
             }
 
             Label(Language.Current.Get("JetpackDashForceMultiplier") + ": " + Settings.JetpackDashForceMultiplier);
+            Label(Language.Current.Get("JetpackNote"));
             Settings.JetpackDashForceMultiplier = Mathf.Round(HorizontalSlider(Settings.JetpackDashForceMultiplier, 0f, 10f) * 10f) / 10f;
             if (Button(Language.Current.Get("Reset"))) {
                 Settings.JetpackDashForceMultiplier = Settings.Defaults.JetpackDashForceMultiplier;

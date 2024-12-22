@@ -9,6 +9,7 @@ namespace Achaman.Localization {
             { "MultiplyRecycledAlloy", "Multiplier l'alliage recyclé (côté hôte)" },
             { "JetpackThrustMultiplier", "Multiplicateur de poussée Jetpack (côté client)" },
             { "JetpackDashForceMultiplier", "Multiplicateur de dash Jetpack (côté client)" },
+            { "JetpackNote", "Note: Cela doit être configuré dans le Hub pour prendre effet." },
             { "PerkPoints", "Points de compétence" },
             { "Reset", "Réinitialiser" },
             { "LanguageLabel", "Langue" }
