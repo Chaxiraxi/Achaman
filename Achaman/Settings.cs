@@ -6,6 +6,7 @@ namespace Achaman {
         public static float MultiplyRecycledAlloy { get; set; } = Defaults.MultiplyRecycledAlloy;
         public static float JetpackThrustMultiplier { get; set; } = Defaults.JetpackThrustMultiplier;
         public static float JetpackDashForceMultiplier { get; set; } = Defaults.JetpackDashForceMultiplier;
+        public static float TotalOwnedPoints { get; set; } = Defaults.TotalOwnedPoints;
 
         internal static class Defaults {
             public static bool InfiniteAbility { get; } = false;
@@ -14,6 +15,7 @@ namespace Achaman {
             public static float MultiplyRecycledAlloy { get; } = 1f;
             public static float JetpackThrustMultiplier { get; } = 1f;
             public static float JetpackDashForceMultiplier { get; } = 1f;
+            public static float TotalOwnedPoints { get; set; } = 31;
         }
     }
 }
