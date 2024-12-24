@@ -10,9 +10,10 @@ namespace Achaman.Localization {
             { "JetpackThrustMultiplier", "Multiplicateur de poussée Jetpack (côté client)" },
             { "JetpackDashForceMultiplier", "Multiplicateur de dash Jetpack (côté client)" },
             { "JetpackNote", "Note: Cela doit être configuré dans le Hub pour prendre effet." },
-            { "PerkPoints", "Points de compétence" },
+            { "PerkPoints", "Points de compétence (côté client)" },
             { "Reset", "Réinitialiser" },
-            { "LanguageLabel", "Langue" }
+            { "LanguageLabel", "Langue" },
+            { "NoPlayerDamage", "Pas de dégâts de joueur (host-side)" }
         };
 
         public string Get(string key) {

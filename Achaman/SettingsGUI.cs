@@ -12,7 +12,7 @@ namespace Achaman {
             Settings.PrintForFree = Toggle(Settings.PrintForFree, Language.Current.Get("PrintForFree"));
             Settings.UpgradeFabricatorForFree = Toggle(Settings.UpgradeFabricatorForFree, Language.Current.Get("UpgradeFabricatorForFree"));
             // Settings.LearnAllRecipes = Toggle(Settings.LearnAllRecipes, "Learn All Recipes");
-            // Settings.NoPlayerDamage = Toggle(Settings.NoPlayerDamage, "No Player Damage");
+            Settings.NoPlayerDamage = Toggle(Settings.NoPlayerDamage, Language.Current.Get("NoPlayerDamage"));
             // Settings.NoShipDamage = Toggle(Settings.NoShipDamage, "No Ship Damage");
             // Settings.SetHealthToMax = Toggle(Settings.SetHealthToMax, "Set health to max when invulnerable. (Note: This takes effect only when No Player Damage or No Ship Damage is enabled.)");
 
