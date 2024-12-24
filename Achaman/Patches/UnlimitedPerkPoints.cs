@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Achaman {
+namespace Achaman.Patches {
     [HarmonyPatch(typeof(CG.Profile.PlayerProfile), "get_TotalOwnedPerkPoints")]
     internal class UnlimitedPerkPointsPatch {
         [HarmonyPostfix]

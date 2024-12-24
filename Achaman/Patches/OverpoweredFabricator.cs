@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Achaman {
+namespace Achaman.Patches {
     // Mark items in the selection list as affordable
     [HarmonyPatch(typeof(FabricationTab), "CanAfford")]
     internal class CanAffordPatch {

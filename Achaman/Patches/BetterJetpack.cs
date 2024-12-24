@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Achaman {
+namespace Achaman.Patches {
     [HarmonyPatch(typeof(FlyJetpack), "get_ThrustForceMultiplier")]
     internal class MoreThrust {
         [HarmonyPostfix]

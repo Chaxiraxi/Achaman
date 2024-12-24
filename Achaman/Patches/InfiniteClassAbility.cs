@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Achaman {
+namespace Achaman.Patches {
     [HarmonyPatch(typeof(ClassAbility), "ActivationKeyPressed")]
     internal class InfiniteAbility {
         [HarmonyPrefix]
