@@ -14,7 +14,7 @@ namespace Achaman {
             // Settings.LearnAllRecipes = Toggle(Settings.LearnAllRecipes, "Learn All Recipes");
             Settings.NoPlayerDamage = Toggle(Settings.NoPlayerDamage, Language.Current.Get("NoPlayerDamage"));
             // Settings.NoShipDamage = Toggle(Settings.NoShipDamage, "No Ship Damage");
-            // Settings.SetHealthToMax = Toggle(Settings.SetHealthToMax, "Set health to max when invulnerable. (Note: This takes effect only when No Player Damage or No Ship Damage is enabled.)");
+            Settings.ManipulateAtmosphere = Toggle(Settings.ManipulateAtmosphere, Language.Current.Get("ManipulateAtmosphere"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
             Settings.MultiplyRecycledAlloy = Mathf.Round(HorizontalSlider(Settings.MultiplyRecycledAlloy, 0f, 10f) * 10f) / 10f;
@@ -40,6 +40,24 @@ namespace Achaman {
             Settings.TotalOwnedPoints = Mathf.RoundToInt(HorizontalSlider(Settings.TotalOwnedPoints, 1f, 95f));
             if (Button(Language.Current.Get("Reset"))) {
                 Settings.TotalOwnedPoints = Settings.Defaults.TotalOwnedPoints;
+            }
+
+            Label(Language.Current.Get("ShipTemperature") + ": " + Settings.ShipTemperature);
+            Settings.ShipTemperature = Mathf.Round(HorizontalSlider(Settings.ShipTemperature, -273f, 501f));
+            if (Button(Language.Current.Get("Reset"))) {
+                Settings.ShipTemperature = Settings.Defaults.ShipTemperature;
+            }
+
+            Label(Language.Current.Get("ShipPressure") + ": " + Mathf.Round(Settings.ShipPressure * 100f) + "%");
+            Settings.ShipPressure = Mathf.Round(HorizontalSlider(Settings.ShipPressure, 0f, 1f) * 100f) / 100f;
+            if (Button(Language.Current.Get("Reset"))) {
+                Settings.ShipPressure = Settings.Defaults.ShipPressure;
+            }
+
+            Label(Language.Current.Get("ShipOxygen") + ": " + Mathf.Round(Settings.ShipOxygen * 100f) + "%");
+            Settings.ShipOxygen = Mathf.Round(HorizontalSlider(Settings.ShipOxygen, 0f, 1f) * 100f) / 100f;
+            if (Button(Language.Current.Get("Reset"))) {
+                Settings.ShipOxygen = Settings.Defaults.ShipOxygen;
             }
 
             Label(Language.Current.Get("LanguageLabel") + ": " + (Language.Current is English ? "English" : "French"));

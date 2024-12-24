@@ -13,7 +13,11 @@ namespace Achaman.Localization {
             { "PerkPoints", "Perk points (client-side)" },
             { "Reset", "Reset" },
             { "LanguageLabel", "Language" },
-            { "NoPlayerDamage", "No player damage (host-side)" }
+            { "NoPlayerDamage", "No player damage (host-side)" },
+            { "ManipulateAtmosphere", "Manipulate atmosphere (host-side)" },
+            { "ShipTemperature", "Ship Temperature (host-side)" },
+            { "ShipPressure", "Ship Pressure (host-side)" },
+            { "ShipOxygen", "Ship Oxygen (host-side)" }
         };
 
         public string Get(string key) {
