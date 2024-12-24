@@ -37,7 +37,7 @@ namespace Achaman {
             }
 
             Label(Language.Current.Get("PerkPoints") + ": " + Settings.TotalOwnedPoints);
-            Settings.TotalOwnedPoints = Mathf.RoundToInt(HorizontalSlider(Settings.TotalOwnedPoints, 1f, 94f));
+            Settings.TotalOwnedPoints = Mathf.RoundToInt(HorizontalSlider(Settings.TotalOwnedPoints, 1f, 95f));
             if (Button(Language.Current.Get("Reset"))) {
                 Settings.TotalOwnedPoints = Settings.Defaults.TotalOwnedPoints;
             }
