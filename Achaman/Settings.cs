@@ -12,6 +12,7 @@ namespace Achaman {
         public static float ShipTemperature { get; set; } = Defaults.ShipTemperature;
         public static float ShipPressure { get; set; } = Defaults.ShipPressure;
         public static float ShipOxygen { get; set; } = Defaults.ShipOxygen;
+        public static bool NoShipDamage { get; set; } = Defaults.NoShipDamage;
 
         internal static class Defaults {
             public static bool InfiniteAbility { get; } = false;
@@ -26,6 +27,7 @@ namespace Achaman {
             public static float ShipTemperature { get; } = 21f;
             public static float ShipPressure { get; } = 1f;
             public static float ShipOxygen { get; } = 1f;
+            public static bool NoShipDamage { get; } = false;
         }
     }
 }

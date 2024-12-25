@@ -13,7 +13,7 @@ namespace Achaman {
             Settings.UpgradeFabricatorForFree = Toggle(Settings.UpgradeFabricatorForFree, Language.Current.Get("UpgradeFabricatorForFree"));
             // Settings.LearnAllRecipes = Toggle(Settings.LearnAllRecipes, "Learn All Recipes");
             Settings.NoPlayerDamage = Toggle(Settings.NoPlayerDamage, Language.Current.Get("NoPlayerDamage"));
-            // Settings.NoShipDamage = Toggle(Settings.NoShipDamage, "No Ship Damage");
+            Settings.NoShipDamage = Toggle(Settings.NoShipDamage, Language.Current.Get("NoShipDamage"));
             Settings.ManipulateAtmosphere = Toggle(Settings.ManipulateAtmosphere, Language.Current.Get("ManipulateAtmosphere"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
