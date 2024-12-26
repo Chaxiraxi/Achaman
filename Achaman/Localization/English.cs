@@ -18,7 +18,8 @@ namespace Achaman.Localization {
             { "ShipTemperature", "Ship Temperature (host-side)" },
             { "ShipPressure", "Ship Pressure (host-side)" },
             { "ShipOxygen", "Ship Oxygen (host-side)" },
-            { "NoShipDamage", "No Ship Damage (host-side)" }
+            { "NoShipDamage", "No Ship Damage (host-side)" },
+            { "NoBreakerTrip", "No Breaker Trip (host-side)" }
         };
 
         public string Get(string key) {
