@@ -14,6 +14,7 @@ namespace Achaman {
         public static float ShipOxygen { get; set; } = Defaults.ShipOxygen;
         public static bool NoShipDamage { get; set; } = Defaults.NoShipDamage;
         public static bool NoBreakerTrip { get; set; } = Defaults.NoBreakerTrip;
+        public static bool NoJetpackPassiveOxygenDepletion { get; set; } = Defaults.NoJetpackPassiveOxygenDepletion;
 
         internal static class Defaults {
             public static bool InfiniteAbility { get; } = false;
@@ -30,6 +31,7 @@ namespace Achaman {
             public static float ShipOxygen { get; } = 1f;
             public static bool NoShipDamage { get; } = false;
             public static bool NoBreakerTrip { get; } = false;
+            public static bool NoJetpackPassiveOxygenDepletion { get; } = false;
         }
     }
 }

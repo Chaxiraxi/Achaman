@@ -16,6 +16,7 @@ namespace Achaman {
             Settings.NoShipDamage = Toggle(Settings.NoShipDamage, Language.Current.Get("NoShipDamage"));
             Settings.ManipulateAtmosphere = Toggle(Settings.ManipulateAtmosphere, Language.Current.Get("ManipulateAtmosphere"));
             Settings.NoBreakerTrip = Toggle(Settings.NoBreakerTrip, Language.Current.Get("NoBreakerTrip"));
+            Settings.NoJetpackPassiveOxygenDepletion = Toggle(Settings.NoJetpackPassiveOxygenDepletion, Language.Current.Get("NoJetpackPassiveOxygenDepletion"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
             Settings.MultiplyRecycledAlloy = Mathf.Round(HorizontalSlider(Settings.MultiplyRecycledAlloy, 0f, 10f) * 10f) / 10f;

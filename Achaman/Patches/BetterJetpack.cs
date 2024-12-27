@@ -15,4 +15,12 @@ namespace Achaman.Patches {
             __result *= Settings.JetpackDashForceMultiplier;
         }
     }
+
+    [HarmonyPatch(typeof(CharacterOxygen), "get_IgnoreOxygen")]
+    internal class CharacterOxygenPatch {
+        [HarmonyPostfix]
+        private static void IgnoreOxygen(ref bool __result) {
+            __result = true;
+        }
+    }
 }

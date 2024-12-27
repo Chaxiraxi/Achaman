@@ -19,7 +19,8 @@ namespace Achaman.Localization {
             { "ShipPressure", "Ship Pressure (host-side)" },
             { "ShipOxygen", "Ship Oxygen (host-side)" },
             { "NoShipDamage", "No Ship Damage (host-side)" },
-            { "NoBreakerTrip", "No Breaker Trip (host-side)" }
+            { "NoBreakerTrip", "No Breaker Trip (host-side)" },
+            { "NoJetpackPassiveOxygenDepletion", "Prevent Jetpack Passive Oxygen Depletion (client-side)" }
         };
 
         public string Get(string key) {
