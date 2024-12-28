@@ -23,4 +23,6 @@ namespace Achaman.Patches {
             __result = true;
         }
     }
+
+    // TODO: Prevent oxygen from depleting when dash is used
 }
