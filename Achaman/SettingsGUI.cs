@@ -17,11 +17,18 @@ namespace Achaman {
             Settings.ManipulateAtmosphere = Toggle(Settings.ManipulateAtmosphere, Language.Current.Get("ManipulateAtmosphere"));
             Settings.NoBreakerTrip = Toggle(Settings.NoBreakerTrip, Language.Current.Get("NoBreakerTrip"));
             Settings.NoJetpackOxygenDepletion = Toggle(Settings.NoJetpackOxygenDepletion, Language.Current.Get("NoJetpackOxygenDepletion"));
+            Settings.NoBiomassDepletion = Toggle(Settings.NoBiomassDepletion, Language.Current.Get("NoBiomassDepletion"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
             Settings.MultiplyRecycledAlloy = Mathf.Round(HorizontalSlider(Settings.MultiplyRecycledAlloy, 0f, 10f) * 10f) / 10f;
             if (Button(Language.Current.Get("Reset"))) {
                 Settings.MultiplyRecycledAlloy = Settings.Defaults.MultiplyRecycledAlloy;
+            }
+
+            Label(Language.Current.Get("BiomassMultiplier") + ": " + Settings.BiomassMultiplier);
+            Settings.BiomassMultiplier = Mathf.Round(HorizontalSlider(Settings.BiomassMultiplier, 0f, 10f) * 10f) / 10f;
+            if (Button(Language.Current.Get("Reset"))) {
+                Settings.BiomassMultiplier = Settings.Defaults.BiomassMultiplier;
             }
 
             Label(Language.Current.Get("JetpackThrustMultiplier") + ": " + Settings.JetpackThrustMultiplier);
