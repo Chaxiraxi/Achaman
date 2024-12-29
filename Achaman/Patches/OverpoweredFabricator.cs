@@ -31,13 +31,22 @@ namespace Achaman.Patches {
         }
     }
 
-    // Effectively print for free
-    [HarmonyPatch(typeof(Gameplay.Factory.CarryableFactoryLogic), "Print")]
+    [HarmonyPatch(typeof(Gameplay.Factory.CarryableFactoryLogic))]
     internal class CarryableFactoryLogicPatch {
+        // Effectively print for free
         [HarmonyPrefix]
+        [HarmonyPatch("Print")]
         private static void Print(ref int cost) {
             if (!Settings.PrintForFree) return;
             cost = 0;
+        }
+
+        // Multiply by 10 the alloy recycled
+        [HarmonyPrefix]
+        [HarmonyPatch("Recycle")]
+        private static void Recycle(ref int amount) {
+            if (Settings.MultiplyRecycledAlloy == 1f) return;
+            amount = (int) (amount * Settings.MultiplyRecycledAlloy);
         }
     }
 
@@ -47,26 +56,6 @@ namespace Achaman.Patches {
         private static void CanPrint(UI.LoadoutTerminal.PurchasableItem item, ref bool __result) {
             if (!Settings.PrintForFree) return;
             __result = item.CraftingRules.CraftingMethod == ResourceAssets.CraftMethod.Resource;
-        }
-    }
-
-    // Do not display error message when player can't afford an item
-    [HarmonyPatch(typeof(FabricatorActionTab), "DisplayError")]
-    internal class NoDisplayedErrorPatch {
-        [HarmonyPrefix]
-        private static bool DisplayError(string message) {
-            if (!Settings.PrintForFree) return true;
-            return message != "#Fabricator_Error_CantAfford";
-        }
-    }
-
-    // Multiply by 10 the alloy recycled
-    [HarmonyPatch(typeof(Gameplay.Factory.CarryableFactoryLogic), "Recycle")]
-    internal class RecyclePatch {
-        [HarmonyPrefix]
-        private static void Recycle(ref int amount) {
-            if (Settings.MultiplyRecycledAlloy == 1f) return;
-            amount = (int) (amount * Settings.MultiplyRecycledAlloy);
         }
     }
 }
