@@ -1,3 +1,5 @@
+using System;
+
 namespace Achaman {
     internal static class Settings {
         public static bool InfiniteAbility { get; set; } = Defaults.InfiniteAbility;
@@ -17,6 +19,26 @@ namespace Achaman {
         public static bool NoJetpackOxygenDepletion { get; set; } = Defaults.NoJetpackOxygenDepletion;
         public static bool NoBiomassDepletion { get; set; } = Defaults.NoBiomassDepletion;
         public static float BiomassMultiplier { get; set; } = Defaults.BiomassMultiplier;
+
+        internal static void Reset() {
+            InfiniteAbility = Defaults.InfiniteAbility;
+            PrintForFree = Defaults.PrintForFree;
+            UpgradeFabricatorForFree = Defaults.UpgradeFabricatorForFree;
+            MultiplyRecycledAlloy = Defaults.MultiplyRecycledAlloy;
+            JetpackThrustMultiplier = Defaults.JetpackThrustMultiplier;
+            JetpackDashForceMultiplier = Defaults.JetpackDashForceMultiplier;
+            TotalOwnedPoints = Defaults.TotalOwnedPoints;
+            NoPlayerDamage = Defaults.NoPlayerDamage;
+            ManipulateAtmosphere = Defaults.ManipulateAtmosphere;
+            ShipTemperature = Defaults.ShipTemperature;
+            ShipPressure = Defaults.ShipPressure;
+            ShipOxygen = Defaults.ShipOxygen;
+            NoShipDamage = Defaults.NoShipDamage;
+            NoBreakerTrip = Defaults.NoBreakerTrip;
+            NoJetpackOxygenDepletion = Defaults.NoJetpackOxygenDepletion;
+            NoBiomassDepletion = Defaults.NoBiomassDepletion;
+            BiomassMultiplier = Defaults.BiomassMultiplier;
+        }
 
         internal static class Defaults {
             public static bool InfiniteAbility { get; } = false;

@@ -22,7 +22,9 @@ namespace Achaman.Localization {
             { "NoBreakerTrip", "Pas de déclenchement de disjoncteur (côté hôte)" },
             { "NoJetpackOxygenDepletion", "Pas de déplétion d'oxygène du jetpack (côté client)" },
             { "NoBiomassDepletion", "Empêcher la déplétion de biomasse (côté hôte)" },
-            { "BiomassMultiplier", "Multiplicateur de biomasse (côté hôte)" }
+            { "BiomassMultiplier", "Multiplicateur de biomasse (côté hôte)" },
+            { "LearnAllBlueprints", "Apprendre tous les plans" },
+            { "ResetAll", "Réinitialiser tous les paramètres" }
         };
 
         public string Get(string key) {

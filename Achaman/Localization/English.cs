@@ -22,7 +22,9 @@ namespace Achaman.Localization {
             { "NoBreakerTrip", "No Breaker Trip (host-side)" },
             { "NoJetpackOxygenDepletion", "Prevent Jetpack Oxygen Depletion (client-side)" },
             { "NoBiomassDepletion", "Prevent Biomass Depletion (host-side)" },
-            { "BiomassMultiplier", "Biomass Multiplier (host-side)" }
+            { "BiomassMultiplier", "Biomass Multiplier (host-side)" },
+            { "LearnAllBlueprints", "Learn All Blueprints" },
+            { "ResetAll", "Reset all settings" }
         };
 
         public string Get(string key) {
