@@ -21,7 +21,7 @@ namespace Achaman.Patches {
         }
     }
 
-    // Do not show error message when player can't afford the upgrade
+    // Do not show error message when player can't afford the upgrade or the print
     [HarmonyPatch(typeof(FabricatorActionTab), "DisplayError")]
     internal class CheckErrorPatch {
         [HarmonyPrefix]
