@@ -25,7 +25,9 @@ namespace Achaman.Localization {
             { "BiomassMultiplier", "Multiplicateur de biomasse (côté hôte)" },
             { "LearnAllBlueprints", "Apprendre tous les plans" },
             { "ResetAll", "Réinitialiser tous les paramètres" },
-            { "FabricatorSpeedMultiplier", "Multiplicateur de vitesse du Fabricator (côté hôte)" }
+            { "FabricatorSpeedMultiplier", "Multiplicateur de vitesse du Fabricator (côté hôte)" },
+            { "HostOnly", "Ce mod fonctionne uniquement lorsque la progression est désactuvée quand vous êtes l'hôte. Gardez le jeu équitable :D" },
+            { "DisableProgress", "Désactiver la progression" }
         };
 
         public string Get(string key) {

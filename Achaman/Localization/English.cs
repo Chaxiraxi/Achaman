@@ -25,7 +25,9 @@ namespace Achaman.Localization {
             { "BiomassMultiplier", "Biomass Multiplier (host-side)" },
             { "LearnAllBlueprints", "Learn All Blueprints" },
             { "ResetAll", "Reset all settings" },
-            { "FabricatorSpeedMultiplier", "Fabricator Speed Multiplier (host-side)" }
+            { "FabricatorSpeedMultiplier", "Fabricator Speed Multiplier (host-side)" },
+            { "HostOnly", "This mod works only when progression is disabled when you're hosting. Keep the game fair :D" },
+            { "DisableProgress", "Disable Progress" }
         };
 
         public string Get(string key) {

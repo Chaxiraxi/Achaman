@@ -2,12 +2,28 @@ using static UnityEngine.GUILayout;
 using UnityEngine;
 using VoidManager.CustomGUI;
 using Achaman.Localization;
+using VoidManager;
 
 namespace Achaman {
     class SettingsGUI : ModSettingsMenu {
+        private static bool isProgressDisabled = false;
         public override string Name() {return PluginInfo.PLUGIN_NAME + " Settings";}
 
         public override void Draw() {
+            Label(Language.Current.Get("LanguageLabel") + ": " + (Language.Current is English ? "English" : "French"));
+            if (Button("English")) Language.SetLanguage(new English());
+            if (Button("French")) Language.SetLanguage(new French());
+
+            if (!isProgressDisabled) {
+                Label(Language.Current.Get("HostOnly"));
+                if (!VoidManagerPlugin.isHosting) return;
+                if (Button(Language.Current.Get("DisableProgress"))) {
+                    isProgressDisabled = true;
+                    VoidManager.Progression.ProgressionHandler.DisableProgression(MyPluginInfo.PLUGIN_GUID);
+                }
+                return;
+            }
+
             Settings.InfiniteAbility = Toggle(Settings.InfiniteAbility, Language.Current.Get("InfiniteAbility"));
             Settings.PrintForFree = Toggle(Settings.PrintForFree, Language.Current.Get("PrintForFree"));
             Settings.UpgradeFabricatorForFree = Toggle(Settings.UpgradeFabricatorForFree, Language.Current.Get("UpgradeFabricatorForFree"));
@@ -57,10 +73,6 @@ namespace Achaman {
             if (Button(Language.Current.Get("Reset"))) Settings.ShipOxygen = Settings.Defaults.ShipOxygen;
 
             if (Button(Language.Current.Get("LearnAllBlueprints"))) Patches.BlueprintManager.LearnAllSavedBlueprints();
-
-            Label(Language.Current.Get("LanguageLabel") + ": " + (Language.Current is English ? "English" : "French"));
-            if (Button("English")) Language.SetLanguage(new English());
-            if (Button("French")) Language.SetLanguage(new French());
 
             Label(Language.Current.Get("ResetAll"));
             if (Button(Language.Current.Get("Reset"))) Settings.Reset();

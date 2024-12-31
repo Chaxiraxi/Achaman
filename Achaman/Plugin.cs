@@ -9,7 +9,7 @@ namespace Achaman {
     
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.USERS_PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     [BepInProcess("Void Crew.exe")]
-    [BepInDependency(VoidManager.MyPluginInfo.PLUGIN_GUID)]
+    [BepInDependency(MyPluginInfo.PLUGIN_GUID)]
     public class BepinPlugin : BaseUnityPlugin {
 
         internal static new ManualLogSource Logger;
@@ -22,24 +22,29 @@ namespace Achaman {
         }
     }
 
-
     public class VoidManagerPlugin : VoidPlugin {
         // public override MultiplayerType MPType => MultiplayerType.Session;$
-        public override MultiplayerType MPType => MultiplayerType.Client;
+        public override MultiplayerType MPType => MultiplayerType.Host;
         public override string Author => PluginInfo.PLUGIN_AUTHORS;
         public override string Description => PluginInfo.PLUGIN_DESCRIPTION;
         // public override string ThunderstoreID => PluginInfo.PLUGIN_THUNDERSTORE_ID;
+        public static bool isHosting { get; private set; } = false;
 
-        // public override SessionChangedReturn OnSessionChange(SessionChangedInput input) {
-        //     switch (input.CallType) {
-        //         case CallType.SessionEscalated:
-        //         case CallType.HostStartSession:
-        //             VoidManager.Progression.ProgressionHandler.DisableProgression(MyPluginInfo.PLUGIN_GUID);
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        //     return base.OnSessionChange(input);
-        // }
+        public override SessionChangedReturn OnSessionChange(SessionChangedInput input) {
+            isHosting = input.IsHost;
+            switch (input.CallType) {
+                // case CallType.SessionEscalated:
+                // case CallType.HostStartSession:
+                //     break;
+                case CallType.Joining:
+                    // VoidManager.Progression.ProgressionHandler.EnableProgression(MyPluginInfo.PLUGIN_GUID);  // EnableProgression is private in VoidManager for some reason
+                    // isHosting = false;
+                    Settings.Reset();
+                    break;
+                default:
+                    break;
+            }
+            return base.OnSessionChange(input);
+        }
     }
 }
