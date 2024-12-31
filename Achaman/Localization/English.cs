@@ -24,7 +24,8 @@ namespace Achaman.Localization {
             { "NoBiomassDepletion", "Prevent Biomass Depletion (host-side)" },
             { "BiomassMultiplier", "Biomass Multiplier (host-side)" },
             { "LearnAllBlueprints", "Learn All Blueprints" },
-            { "ResetAll", "Reset all settings" }
+            { "ResetAll", "Reset all settings" },
+            { "FabricatorSpeedMultiplier", "Fabricator Speed Multiplier (host-side)" }
         };
 
         public string Get(string key) {

@@ -19,6 +19,7 @@ namespace Achaman {
         public static bool NoJetpackOxygenDepletion { get; set; } = Defaults.NoJetpackOxygenDepletion;
         public static bool NoBiomassDepletion { get; set; } = Defaults.NoBiomassDepletion;
         public static float BiomassMultiplier { get; set; } = Defaults.BiomassMultiplier;
+        public static float FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
 
         internal static void Reset() {
             InfiniteAbility = Defaults.InfiniteAbility;
@@ -38,6 +39,7 @@ namespace Achaman {
             NoJetpackOxygenDepletion = Defaults.NoJetpackOxygenDepletion;
             NoBiomassDepletion = Defaults.NoBiomassDepletion;
             BiomassMultiplier = Defaults.BiomassMultiplier;
+            FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
         }
 
         internal static class Defaults {
@@ -58,6 +60,7 @@ namespace Achaman {
             public static bool NoJetpackOxygenDepletion { get; } = false;
             public static bool NoBiomassDepletion { get; } = false;
             public static float BiomassMultiplier { get; } = 1f;
+            public static float FabricatorSpeedMultiplier { get; } = 1f;
         }
     }
 }

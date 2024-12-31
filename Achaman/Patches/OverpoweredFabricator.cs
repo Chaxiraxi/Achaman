@@ -1,3 +1,4 @@
+using Gameplay.Factory;
 using HarmonyLib;
 
 namespace Achaman.Patches {
@@ -56,6 +57,25 @@ namespace Achaman.Patches {
         private static void CanPrint(UI.LoadoutTerminal.PurchasableItem item, ref bool __result) {
             if (!Settings.PrintForFree) return;
             __result = item.CraftingRules.CraftingMethod == ResourceAssets.CraftMethod.Resource;
+        }
+    }
+
+    [HarmonyPatch(typeof(CarryableFactoryUtils))]
+    internal class CarryableFactoryUtilsPatch {
+        [HarmonyPostfix]
+        [HarmonyPatch("GetRecycleAnimationDuration")]
+        private static void RecycleAnimationDuration(ref float __result) {
+            if (Settings.FabricatorSpeedMultiplier == 1f) return;
+
+            __result /= Settings.FabricatorSpeedMultiplier;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch("GetCopierAnimationDuration")]
+        private static void CopierAnimationDuration(ref float __result) {
+            if (Settings.FabricatorSpeedMultiplier == 1f) return;
+
+            __result /= Settings.FabricatorSpeedMultiplier;
         }
     }
 }

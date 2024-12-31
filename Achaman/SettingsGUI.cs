@@ -11,7 +11,6 @@ namespace Achaman {
             Settings.InfiniteAbility = Toggle(Settings.InfiniteAbility, Language.Current.Get("InfiniteAbility"));
             Settings.PrintForFree = Toggle(Settings.PrintForFree, Language.Current.Get("PrintForFree"));
             Settings.UpgradeFabricatorForFree = Toggle(Settings.UpgradeFabricatorForFree, Language.Current.Get("UpgradeFabricatorForFree"));
-            // Settings.LearnAllRecipes = Toggle(Settings.LearnAllRecipes, "Learn All Recipes");
             Settings.NoPlayerDamage = Toggle(Settings.NoPlayerDamage, Language.Current.Get("NoPlayerDamage"));
             Settings.NoShipDamage = Toggle(Settings.NoShipDamage, Language.Current.Get("NoShipDamage"));
             Settings.ManipulateAtmosphere = Toggle(Settings.ManipulateAtmosphere, Language.Current.Get("ManipulateAtmosphere"));
@@ -36,6 +35,10 @@ namespace Achaman {
             Label(Language.Current.Get("JetpackNote"));
             Settings.JetpackDashForceMultiplier = Mathf.Round(HorizontalSlider(Settings.JetpackDashForceMultiplier, 0f, 10f) * 10f) / 10f;
             if (Button(Language.Current.Get("Reset"))) Settings.JetpackDashForceMultiplier = Settings.Defaults.JetpackDashForceMultiplier;
+
+            Label(Language.Current.Get("FabricatorSpeedMultiplier") + ": " + Settings.FabricatorSpeedMultiplier);
+            Settings.FabricatorSpeedMultiplier = Mathf.Round(HorizontalSlider(Settings.FabricatorSpeedMultiplier, 0f, 10f) * 10f) / 10f;
+            if (Button(Language.Current.Get("Reset"))) Settings.FabricatorSpeedMultiplier = Settings.Defaults.FabricatorSpeedMultiplier;
 
             Label(Language.Current.Get("PerkPoints") + ": " + Settings.TotalOwnedPoints);
             Settings.TotalOwnedPoints = Mathf.RoundToInt(HorizontalSlider(Settings.TotalOwnedPoints, 1f, 95f));
