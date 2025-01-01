@@ -6,7 +6,6 @@ using VoidManager;
 using VoidManager.MPModChecks;
 
 namespace Achaman {
-    
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.USERS_PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     [BepInProcess("Void Crew.exe")]
     [BepInDependency(MyPluginInfo.PLUGIN_GUID)]
@@ -32,18 +31,7 @@ namespace Achaman {
 
         public override SessionChangedReturn OnSessionChange(SessionChangedInput input) {
             isHosting = input.IsHost;
-            switch (input.CallType) {
-                // case CallType.SessionEscalated:
-                // case CallType.HostStartSession:
-                //     break;
-                case CallType.Joining:
-                    // VoidManager.Progression.ProgressionHandler.EnableProgression(MyPluginInfo.PLUGIN_GUID);  // EnableProgression is private in VoidManager for some reason
-                    // isHosting = false;
-                    Settings.Reset();
-                    break;
-                default:
-                    break;
-            }
+            if (!isHosting) Settings.Reset();
             return base.OnSessionChange(input);
         }
     }
