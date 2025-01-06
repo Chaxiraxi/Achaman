@@ -53,7 +53,7 @@ namespace Achaman {
             if (Button(Language.Current.Get("Reset"))) Settings.JetpackDashForceMultiplier = Settings.Defaults.JetpackDashForceMultiplier;
 
             Label(Language.Current.Get("FabricatorSpeedMultiplier") + ": " + Settings.FabricatorSpeedMultiplier);
-            Settings.FabricatorSpeedMultiplier = Mathf.Round(HorizontalSlider(Settings.FabricatorSpeedMultiplier, 0f, 10f) * 10f) / 10f;
+            Settings.FabricatorSpeedMultiplier = Mathf.Round(HorizontalSlider(Settings.FabricatorSpeedMultiplier, 0.1f, 10f) * 10f) / 10f;
             if (Button(Language.Current.Get("Reset"))) Settings.FabricatorSpeedMultiplier = Settings.Defaults.FabricatorSpeedMultiplier;
 
             Label(Language.Current.Get("PerkPoints") + ": " + Settings.TotalOwnedPoints);
