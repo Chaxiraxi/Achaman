@@ -7,7 +7,7 @@ Compile the DLL with `dotnet build` and add it to your BepInEx plugins folder
 
 ## How to use:
 1. Host a game
-2. Open the F5 menu of VoidManager
+2. Open the F5 menu of [VoidManager](https://github.com/Void-Crew-Modding-Team/VoidManager)
 3. Go to Achaman Settings
 4. Click the button to disable progression and enable the mod (it has to be fair for other vanilla players obviously)
 5. ENJOY!
