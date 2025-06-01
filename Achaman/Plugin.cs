@@ -22,7 +22,6 @@ namespace Achaman {
     }
 
     public class VoidManagerPlugin : VoidPlugin {
-        // public override MultiplayerType MPType => MultiplayerType.Session;$
         public override MultiplayerType MPType => MultiplayerType.Host;
         public override string Author => PluginInfo.PLUGIN_AUTHORS;
         public override string Description => PluginInfo.PLUGIN_DESCRIPTION;
@@ -31,7 +30,7 @@ namespace Achaman {
 
         public override SessionChangedReturn OnSessionChange(SessionChangedInput input) {
             isHosting = input.IsHost;
-            if (!isHosting) Settings.Reset();
+            // if (!isHosting) Settings.Reset();
             return base.OnSessionChange(input);
         }
     }
