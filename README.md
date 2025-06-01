@@ -3,7 +3,12 @@ This is a BepInEx mod for the game Void Crew that allows you to cheat and play t
 
 Currently in pre-release beta version
 
-Compile the DLL with `dotnet build` and add it to your BepInEx plugins folder
+Supported game version: 1.1.0
+
+Compile the DLL with `dotnet build` and add it to your BepInEx plugins folder. You need toe dotnet SDK to build it, you can install the latest version by running the following command in your Windows Terminal (either CMD or PowerShell):
+```powershell
+winget install Microsoft.DotNet.SDK.9
+```
 
 ## How to use:
 1. Host a game
