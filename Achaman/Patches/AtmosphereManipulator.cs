@@ -5,10 +5,10 @@ using HarmonyLib;
 using Photon.Pun;
 
 namespace Achaman.Patches {
-    [HarmonyPatch(typeof(AbstractPlayerControlledShip), "ApplyPassiveTemperatureShift")]
+    [HarmonyPatch(typeof(PlayerControlledShip), "ApplyPassiveTemperatureShift")]
     public class ApplyPassiveTemperatureShiftPatch {
         [HarmonyPrefix]
-        public static bool ApplyPassiveTemperatureShift(AbstractPlayerControlledShip __instance) {
+        public static bool ApplyPassiveTemperatureShift(PlayerControlledShip __instance) {
             if (!Settings.ManipulateAtmosphere) return true;
 
             MonoBehaviourPun photonView = __instance;
