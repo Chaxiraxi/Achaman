@@ -30,7 +30,7 @@ namespace Achaman {
 
         public override SessionChangedReturn OnSessionChange(SessionChangedInput input) {
             isHosting = input.IsHost;
-            // if (!isHosting) Settings.Reset();
+            if (!isHosting) Settings.Reset();
             return base.OnSessionChange(input);
         }
     }

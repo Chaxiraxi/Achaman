@@ -14,15 +14,16 @@ namespace Achaman {
             if (Button("English")) Language.SetLanguage(new English());
             if (Button("French")) Language.SetLanguage(new French());
 
-            // if (!isProgressDisabled) {
-            //     Label(Language.Current.Get("HostOnly"));
-            //     if (!VoidManagerPlugin.isHosting) return;
-            //     if (Button(Language.Current.Get("DisableProgress"))) {
-            //         isProgressDisabled = true;
-            //         VoidManager.Progression.ProgressionHandler.DisableProgression(MyPluginInfo.PLUGIN_GUID);
-            //     }
-            //     return;
-            // }
+            // Disables progression to keep the game fair.
+            if (!isProgressDisabled) {
+                Label(Language.Current.Get("HostOnly"));
+                if (!VoidManagerPlugin.isHosting) return;
+                if (Button(Language.Current.Get("DisableProgress"))) {
+                    isProgressDisabled = true;
+                    VoidManager.Progression.ProgressionHandler.DisableProgression(MyPluginInfo.PLUGIN_GUID);
+                }
+                return;
+            }
 
             Settings.InfiniteAbility = Toggle(Settings.InfiniteAbility, Language.Current.Get("InfiniteAbility"));
             Settings.PrintForFree = Toggle(Settings.PrintForFree, Language.Current.Get("PrintForFree"));
