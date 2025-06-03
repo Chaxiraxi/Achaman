@@ -20,7 +20,7 @@ namespace Achaman.Patches {
     internal class CharacterOxygenPatch {
         [HarmonyPostfix]
         private static void IgnoreOxygen(ref bool __result) {
-            __result = true;
+            __result = Settings.NoJetpackOxygenDepletion || __result;
         }
     }
 
