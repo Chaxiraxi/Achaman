@@ -15,7 +15,7 @@ namespace Achaman {
             if (Button("French")) Language.SetLanguage(new French());
 
             // Disables progression to keep the game fair.
-            if (!isProgressDisabled) {
+            if (!isProgressDisabled && AchamanPlugin.SHOULD_DISABLE_PROGRESS) {
                 Label(Language.Current.Get("HostOnly"));
                 if (!VoidManagerPlugin.isHosting) return;
                 if (Button(Language.Current.Get("DisableProgress"))) {

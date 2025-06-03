@@ -29,7 +29,7 @@ namespace Achaman.Patches {
                 blueprintsToLearn.RemoveAt(0);
             } else if (isLearningBlueprints && blueprintsToLearn.Count == 0) {
                 isLearningBlueprints = false;
-                BepinPlugin.Logger.LogInfo("All blueprints learned.");
+                AchamanPlugin.Logger.LogInfo("All blueprints learned.");
             }
         }
     }
@@ -40,14 +40,14 @@ namespace Achaman.Patches {
         {
             if (FabricatorModuleBlueprintPatch.fabricatorInstance == null)
             {
-                BepinPlugin.Logger.LogError("Cannot learn blueprints: Fabricator instance is null");
+                AchamanPlugin.Logger.LogError("Cannot learn blueprints: Fabricator instance is null");
                 return;
             }
 
             var guidList = DumpGUIDs();
             if (guidList.Count == 0)
             {
-                BepinPlugin.Logger.LogError("No blueprints found to learn.");
+                AchamanPlugin.Logger.LogError("No blueprints found to learn.");
                 return;
             }
             FabricatorModuleBlueprintPatch.blueprintsToLearn = guidList;
