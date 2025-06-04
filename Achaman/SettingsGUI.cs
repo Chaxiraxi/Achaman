@@ -3,22 +3,30 @@ using UnityEngine;
 using VoidManager.CustomGUI;
 using Achaman.Localization;
 using VoidManager;
+using System.Linq;
+using Achaman.Console;  // added for Executor
 
-namespace Achaman {
-    class SettingsGUI : ModSettingsMenu {
+namespace Achaman
+{
+    class SettingsGUI : ModSettingsMenu
+    {
         private static bool isProgressDisabled = false;
-        public override string Name() {return PluginInfo.PLUGIN_NAME + " Settings";}
+        public override string Name() { return PluginInfo.PLUGIN_NAME + " Settings"; }
+        private static string consoleInput = "";
 
-        public override void Draw() {
+        public override void Draw()
+        {
             Label(Language.Current.Get("LanguageLabel") + ": " + (Language.Current is English ? "English" : "French"));
             if (Button("English")) Language.SetLanguage(new English());
             if (Button("French")) Language.SetLanguage(new French());
 
             // Disables progression to keep the game fair.
-            if (!isProgressDisabled && AchamanPlugin.SHOULD_DISABLE_PROGRESS) {
+            if (!isProgressDisabled && AchamanPlugin.SHOULD_DISABLE_PROGRESS)
+            {
                 Label(Language.Current.Get("HostOnly"));
                 if (!VoidManagerPlugin.isHosting) return;
-                if (Button(Language.Current.Get("DisableProgress"))) {
+                if (Button(Language.Current.Get("DisableProgress")))
+                {
                     isProgressDisabled = true;
                     VoidManager.Progression.ProgressionHandler.DisableProgression(MyPluginInfo.PLUGIN_GUID);
                 }
@@ -74,6 +82,48 @@ namespace Achaman {
             if (Button(Language.Current.Get("Reset"))) Settings.ShipOxygen = Settings.Defaults.ShipOxygen;
 
             if (Button(Language.Current.Get("LearnAllBlueprints"))) Patches.BlueprintManager.LearnAllSavedBlueprints();
+
+            Label(Language.Current.Get("DebugConsole"));
+            GUI.SetNextControlName("ConsoleInput");
+            consoleInput = TextField(consoleInput);
+
+            var e = Event.current;
+            if (GUI.GetNameOfFocusedControl() == "ConsoleInput" && e.type == EventType.KeyDown)
+            {
+                if (e.keyCode == KeyCode.UpArrow)
+                {
+                    consoleInput = Executor.PreviousHistory();
+                    e.Use();
+                }
+                else if (e.keyCode == KeyCode.DownArrow)
+                {
+                    consoleInput = Executor.NextHistory();
+                    e.Use();
+                }
+                else if (e.keyCode == KeyCode.Tab)
+                {
+                    consoleInput = Executor.GetAutoComplete(consoleInput);
+                    e.Use();
+                }
+                else if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter)
+                {
+                    string[] parts = consoleInput.Split(' ');
+                    string command = parts[0];
+                    string[] args = parts.Skip(1).ToArray();
+                    Executor.ExecuteCommand(command, args);
+                    consoleInput = "";
+                    e.Use();
+                }
+            }
+
+            if (Button(Language.Current.Get("ExecuteCommand")))
+            {
+                string[] parts = consoleInput.Split(' ');
+                string command = parts[0];
+                string[] args = parts.Skip(1).ToArray();
+                Console.Executor.ExecuteCommand(command, args);
+                consoleInput = "";
+            }
 
             Label(Language.Current.Get("ResetAll"));
             if (Button(Language.Current.Get("Reset"))) Settings.Reset();

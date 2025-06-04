@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 
-namespace Achaman.Localization {
-    public class French : ILanguage {
+namespace Achaman.Localization
+{
+    public class French : ILanguage
+    {
         private readonly Dictionary<string, string> translations = new Dictionary<string, string> {
             { "InfiniteAbility", "Capacité infinie (côté client)" },
             { "PrintForFree", "Imprimer gratuitement (côté hôte)" },
@@ -27,11 +29,15 @@ namespace Achaman.Localization {
             { "ResetAll", "Réinitialiser tous les paramètres" },
             { "FabricatorSpeedMultiplier", "Multiplicateur de vitesse du Fabricator (côté hôte)" },
             { "HostOnly", "Ce mod fonctionne uniquement lorsque la progression est désactivée quand vous êtes l'hôte. Gardez le jeu équitable :D" },
-            { "DisableProgress", "Désactiver la progression" }
+            { "DisableProgress", "Désactiver la progression" },
+            { "DebugConsole", "Console de débogage (encore en état alpha)" },
+            { "ExecuteCommand", "Exécuter la commande" }
         };
 
-        public string Get(string key) {
-            if (translations.TryGetValue(key, out string value)) {
+        public string Get(string key)
+        {
+            if (translations.TryGetValue(key, out string value))
+            {
                 return value;
             }
             return key;

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 
-namespace Achaman.Localization {
-    public class English : ILanguage {
+namespace Achaman.Localization
+{
+    public class English : ILanguage
+    {
         private readonly Dictionary<string, string> translations = new Dictionary<string, string> {
             { "InfiniteAbility", "Infinite Ability (client-side)" },
             { "PrintForFree", "Print For Free (host-side)" },
@@ -27,11 +29,15 @@ namespace Achaman.Localization {
             { "ResetAll", "Reset all settings" },
             { "FabricatorSpeedMultiplier", "Fabricator Speed Multiplier (host-side)" },
             { "HostOnly", "This mod works only when progression is disabled when you're hosting. Keep the game fair :D" },
-            { "DisableProgress", "Disable Progress" }
+            { "DisableProgress", "Disable Progress" },
+            { "DebugConsole", "Debug Console (Still in alpha state)" },
+            { "ExecuteCommand", "Execute Command" }
         };
 
-        public string Get(string key) {
-            if (translations.TryGetValue(key, out string value)) {
+        public string Get(string key)
+        {
+            if (translations.TryGetValue(key, out string value))
+            {
                 return value;
             }
             return key;
