@@ -23,16 +23,17 @@ namespace Achaman.Console
         private const float ResizeBorderSize = 10f;
 
         private bool initialized = false;
+        private const float WindowProportion = 0.35f; // 35% of screen size
 
         void OnGUI()
         {
             if (!IsVisible) return;
 
-            // Initialize windowRect to 20% of screen size, only once
+            // Initialize windowRect to 35% of screen size, only once
             if (!initialized)
             {
-                float width = Mathf.Max(MinWidth, Screen.width * 0.2f);
-                float height = Mathf.Max(MinHeight, Screen.height * 0.2f);
+                float width = Mathf.Max(MinWidth, Screen.width * WindowProportion);
+                float height = Mathf.Max(MinHeight, Screen.height * WindowProportion);
                 windowRect = new Rect(20, 20, width, height);
                 initialized = true;
             }
