@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BepInEx;
+using UnityEngine;
 
 namespace Achaman.Console
 {
@@ -9,6 +11,8 @@ namespace Achaman.Console
         private static List<ConsoleCommandInfo> allCommands;
         private static List<string> commandHistory = new List<string>();
         private static int historyIndex = -1;
+        // Update to use KeyCode instead of ConsoleKey for better Unity integration
+        private static Dictionary<KeyCode, List<string>> keyBindings = new Dictionary<KeyCode, List<string>>();
         /// <summary>
         /// Executes a console command
         /// </summary>
@@ -57,14 +61,28 @@ namespace Achaman.Console
                 processedArgs.Add(currentArg); // Add any remaining arg if quotes were unbalanced
             }
 
-            if (input.Equals("help", StringComparison.OrdinalIgnoreCase))
-            {
-                var helpText = string.Join(
-                    Environment.NewLine,
-                    allCommands.Select(command => $"{command.Command} - {command.Description}")
-                );
-                return helpText;
-            }
+            // if (input.Equals("help", StringComparison.OrdinalIgnoreCase))
+            // {
+            //     var helpText = string.Join(
+            //         Environment.NewLine,
+            //         allCommands.Select(command => $"{command.Command} - {command.Description}")
+            //     );
+            //     return helpText;
+            // }
+
+            // if (input.Equals("bind", StringComparison.OrdinalIgnoreCase))
+            // {
+            //     if (processedArgs.Count < 2)
+            //         return "Usage: bind <key> <command>";
+            //     return BindCommand(processedArgs[0], string.Join(" ", processedArgs.Skip(1)));
+            // }
+
+            // if (input.Equals("unbind", StringComparison.OrdinalIgnoreCase))
+            // {
+            //     if (processedArgs.Count < 1)
+            //         return "Usage: unbind <key>";
+            //     return UnbindCommand(processedArgs[0]);
+            // }
 
             var cmd = allCommands.FirstOrDefault(c => c.Command.Equals(input, StringComparison.OrdinalIgnoreCase));
             if (cmd == null)
@@ -146,6 +164,170 @@ namespace Achaman.Console
                 }
             }
             return parsed;
+        }
+
+        public static string HelpCommands()
+        {
+            if (allCommands == null)
+            {
+                allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
+            }
+
+            var helpText = new List<string>();
+            foreach (var command in allCommands)
+            {
+                helpText.Add($"{command.Command} - {command.Description}");
+            }
+            return string.Join(Environment.NewLine, helpText);
+        }
+
+        /// <summary>
+        /// Binds a command to a specific key
+        /// </summary>
+        /// <param name="key">The key to bind to</param>
+        /// <param name="command">The command to execute when the key is pressed</param>
+        /// <returns>Message indicating the binding result</returns>
+        public static string BindCommand(string key, string command)
+        {
+            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(command))
+                return "Usage: bind <key> <command>";
+
+            KeyCode keyCode;
+            if (!TryParseKey(key, out keyCode))
+                return $"Invalid key: {key}";
+
+            if (!keyBindings.ContainsKey(keyCode))
+                keyBindings[keyCode] = new List<string>();
+
+            keyBindings[keyCode].Add(command);
+            return $"Bound '{command}' to key '{key}'";
+        }
+
+        /// <summary>
+        /// Removes all bindings for a specific key
+        /// </summary>
+        /// <param name="key">The key to unbind</param>
+        /// <returns>Message indicating the unbinding result</returns>
+        public static string UnbindCommand(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+                return "Usage: unbind <key>";
+
+            KeyCode keyCode;
+            if (!TryParseKey(key, out keyCode))
+                return $"Invalid key: {key}";
+
+            if (keyBindings.ContainsKey(keyCode))
+            {
+                int count = keyBindings[keyCode].Count;
+                keyBindings.Remove(keyCode);
+                return $"Unbound {count} command(s) from key '{key}'";
+            }
+
+            return $"No binding found for key '{key}'";
+        }
+
+        /// <summary>
+        /// Tries to parse a string representation of a key to a Unity KeyCode
+        /// </summary>
+        private static bool TryParseKey(string keyString, out KeyCode keyCode)
+        {
+            keyCode = KeyCode.None;
+            if (string.IsNullOrEmpty(keyString))
+                return false;
+
+            // Try parsing the key directly
+            if (Enum.TryParse(keyString, true, out keyCode))
+                return true;
+
+            // Handle common aliases
+            switch (keyString.ToLower())
+            {
+                case "enter":
+                case "return":
+                    keyCode = KeyCode.Return;
+                    return true;
+                case "esc":
+                    keyCode = KeyCode.Escape;
+                    return true;
+                case "space":
+                case "spacebar":
+                    keyCode = KeyCode.Space;
+                    return true;
+                case "tab":
+                    keyCode = KeyCode.Tab;
+                    return true;
+                default:
+                    // For single character keys
+                    if (keyString.Length == 1)
+                    {
+                        char c = char.ToUpper(keyString[0]);
+                        if (char.IsDigit(c))
+                        {
+                            // Alpha numeric keys
+                            keyCode = (KeyCode)((int)KeyCode.Alpha0 + (c - '0'));
+                            return true;
+                        }
+                        else if (char.IsLetter(c))
+                        {
+                            keyCode = (KeyCode)((int)KeyCode.A + (c - 'A'));
+                            return true;
+                        }
+                    }
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if any keys with bindings are pressed and executes the bound commands
+        /// </summary>
+        /// <returns>The results of the command executions</returns>
+        public static string CheckKeyBindings()
+        {
+            List<string> results = new List<string>();
+
+            // Check each key in the keyBindings dictionary
+            foreach (var keyPair in keyBindings)
+            {
+                if (UnityInput.Current.GetKeyDown(keyPair.Key))
+                {
+                    foreach (string command in keyPair.Value)
+                    {
+                        string[] parts = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length > 0)
+                        {
+                            string cmd = parts[0];
+                            string[] args = parts.Length > 1 ? parts.Skip(1).ToArray() : new string[0];
+                            string result = ExecuteCommand(cmd, args);
+                            if (!string.IsNullOrEmpty(result))
+                                results.Add(result);
+                        }
+                    }
+                }
+            }
+
+            return string.Join(Environment.NewLine, results);
+        }
+
+        /// <summary>
+        /// Gets all current key bindings
+        /// </summary>
+        /// <returns>A string containing all current key bindings</returns>
+        public static string GetAllBindings()
+        {
+            if (keyBindings.Count == 0)
+                return "No key bindings set";
+
+            List<string> bindingStrings = new List<string>();
+            foreach (var keyPair in keyBindings)
+            {
+                foreach (string command in keyPair.Value)
+                {
+                    bindingStrings.Add($"{keyPair.Key}: {command}");
+                }
+            }
+
+            return string.Join(Environment.NewLine, bindingStrings);
         }
     }
 }

@@ -35,6 +35,13 @@ namespace Achaman
             {
                 ConsoleGUI.IsVisible = !ConsoleGUI.IsVisible;
             }
+
+            // Check for keybindings and execute commands if needed
+            string result = Executor.CheckKeyBindings();
+            if (!string.IsNullOrEmpty(result))
+            {
+                Logger.LogInfo(result);
+            }
         }
     }
 

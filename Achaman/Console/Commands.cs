@@ -21,7 +21,31 @@ namespace Achaman.Console
         /// <returns>A list of ConsoleCommandInfo containing command details.</returns>
         public static List<ConsoleCommandInfo> CollectConsoleCommands()
         {
-            var commands = new List<ConsoleCommandInfo>();
+            var commands = new List<ConsoleCommandInfo>
+            {
+                new ConsoleCommandInfo
+                {
+                    Command = "help",
+                    Description = "Displays a list of available console commands.",
+                    Method = typeof(Executor).GetMethod("HelpCommands", BindingFlags.Public | BindingFlags.Static),
+                    Parameters = new ParameterInfo[] { }
+                },
+                // Manually add help, bind and unbind commands
+                new ConsoleCommandInfo
+                {
+                    Command = "bind",
+                    Description = "Binds a key to a console command.",
+                    Method = typeof(Executor).GetMethod("BindKey", BindingFlags.Public | BindingFlags.Static),
+                    Parameters = new ParameterInfo[] { }
+                },
+                new ConsoleCommandInfo
+                {
+                    Command = "unbind",
+                    Description = "Unbinds a key from a console command.",
+                    Method = typeof(Executor).GetMethod("UnbindKey", BindingFlags.Public | BindingFlags.Static),
+                    Parameters = new ParameterInfo[] { }
+                }
+            };
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
@@ -37,9 +61,15 @@ namespace Achaman.Console
                             // Use reflection to access the properties
                             var attrType = attribute.GetType();
                             var commandProp = attrType.GetProperty("Command");
+
                             var descProp = attrType.GetProperty("Description");
 
                             string command = commandProp?.GetValue(attribute) as string ?? method.Name;
+                            if (command.Equals("bind", StringComparison.OrdinalIgnoreCase) || command.Equals("unbind", StringComparison.OrdinalIgnoreCase))
+                            {
+                                // Skip 'bind' and 'unbind' commands
+                                continue;
+                            }
                             string description = descProp?.GetValue(attribute) as string ?? "";
 
                             commands.Add(new ConsoleCommandInfo
