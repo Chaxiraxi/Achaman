@@ -7,9 +7,12 @@ namespace Achaman.Console
     {
         public static bool IsVisible { get; set; } = false;
         private string consoleInput = "";
-        private Rect windowRect = new Rect(20, 20, 1500, 1000); // Adjusted height
+        private Rect windowRect;
         private const int WindowId = 12345; // Unique ID for the window
         private string consoleOutput = "";
+
+        // add this:
+        private Vector2 scrollPosition = Vector2.zero;
 
         // ─── new fields for resizing ─────────────────────────────
         private bool isResizing = false;
@@ -19,9 +22,20 @@ namespace Achaman.Console
         private const float MinHeight = 100f;
         private const float ResizeBorderSize = 10f;
 
+        private bool initialized = false;
+
         void OnGUI()
         {
             if (!IsVisible) return;
+
+            // Initialize windowRect to 20% of screen size, only once
+            if (!initialized)
+            {
+                float width = Mathf.Max(MinWidth, Screen.width * 0.2f);
+                float height = Mathf.Max(MinHeight, Screen.height * 0.2f);
+                windowRect = new Rect(20, 20, width, height);
+                initialized = true;
+            }
 
             windowRect = GUILayout.Window(WindowId, windowRect, DrawConsoleWindow, "Achaman Console");
         }
@@ -30,7 +44,12 @@ namespace Achaman.Console
         {
             GUILayout.BeginVertical();
 
-            consoleOutput = GUILayout.TextArea(consoleOutput, GUILayout.ExpandHeight(true));
+            // replace the editable TextArea with this scrollable, read-only area:
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.ExpandHeight(true));
+            GUI.enabled = false;
+            GUILayout.TextArea(consoleOutput, GUILayout.ExpandHeight(true));
+            GUI.enabled = true;
+            GUILayout.EndScrollView();
 
             // name the next control so we can focus it
             GUI.SetNextControlName("ConsoleInput");
