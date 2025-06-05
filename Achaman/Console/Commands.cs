@@ -36,14 +36,14 @@ namespace Achaman.Console
                     Command = "bind",
                     Description = "Binds a key to a console command.",
                     Method = typeof(Executor).GetMethod("BindCommand", BindingFlags.Public | BindingFlags.Static),
-                    Parameters = new ParameterInfo[] { }
+                    Parameters = typeof(Executor).GetMethod("BindCommand", BindingFlags.Public | BindingFlags.Static).GetParameters()
                 },
                 new ConsoleCommandInfo
                 {
                     Command = "unbind",
                     Description = "Unbinds a key from a console command.",
                     Method = typeof(Executor).GetMethod("UnbindCommand", BindingFlags.Public | BindingFlags.Static),
-                    Parameters = new ParameterInfo[] { }
+                    Parameters = typeof(Executor).GetMethod("UnbindCommand", BindingFlags.Public | BindingFlags.Static).GetParameters()
                 },
                 new ConsoleCommandInfo
                 {
