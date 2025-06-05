@@ -52,18 +52,10 @@ namespace Achaman.Console
             GUI.enabled = true;
             GUILayout.EndScrollView();
 
-            // name the next control so we can focus it
-            GUI.SetNextControlName("ConsoleInput");
-            consoleInput = GUILayout.TextField(consoleInput, GUILayout.ExpandWidth(true));
-
-            // immediately give it focus once the GUI has been laid out
-            if (Event.current.type == EventType.Repaint)
-                GUI.FocusControl("ConsoleInput");
-
             Event e = Event.current;
+            // Handle history navigation BEFORE drawing the TextField
             if (GUI.GetNameOfFocusedControl() == "ConsoleInput" && e.type == EventType.KeyDown)
             {
-                bool execute = false;
                 if (e.keyCode == KeyCode.UpArrow)
                 {
                     consoleInput = Executor.PreviousHistory();
@@ -74,17 +66,26 @@ namespace Achaman.Console
                     consoleInput = Executor.NextHistory();
                     e.Use();
                 }
-                else if (e.keyCode == KeyCode.Tab)
+            }
+
+            // name the next control so we can focus it
+            GUI.SetNextControlName("ConsoleInput");
+            consoleInput = GUILayout.TextField(consoleInput, GUILayout.ExpandWidth(true));
+
+            // immediately give it focus once the GUI has been laid out
+            if (Event.current.type == EventType.Repaint)
+                GUI.FocusControl("ConsoleInput");
+
+            if (e.type == EventType.KeyDown && GUI.GetNameOfFocusedControl() == "ConsoleInput")
+            {
+                bool execute = false;
+                if (e.keyCode == KeyCode.Tab)
                 {
                     consoleInput = Executor.GetAutoComplete(consoleInput);
-                    // Move cursor to end of text field after autocomplete
-                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
-                    if (editor != null)
-                    {
-                        editor.cursorIndex = consoleInput.Length;
-                        editor.selectIndex = consoleInput.Length;
-                    }
                     e.Use();
+
+                    // immediately focus the input so TextEditor exists for that control
+                    GUI.FocusControl("ConsoleInput");
                 }
                 else if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter)
                 {
@@ -95,6 +96,20 @@ namespace Achaman.Console
                 if (execute)
                 {
                     ExecuteCurrentCommand();
+                }
+            }
+
+            // on repaint, if our field is focused, push the cursor to the end
+            if (Event.current.type == EventType.Repaint
+                && GUI.GetNameOfFocusedControl() == "ConsoleInput")
+            {
+                var editor = (TextEditor)GUIUtility.GetStateObject(
+                                 typeof(TextEditor),
+                                 GUIUtility.keyboardControl);
+                if (editor != null)
+                {
+                    editor.cursorIndex = consoleInput.Length;
+                    editor.selectIndex = consoleInput.Length;
                 }
             }
 
