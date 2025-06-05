@@ -101,10 +101,31 @@ namespace Achaman.Console
             if (allCommands == null)
                 allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
 
-            var match = allCommands
-                .Select(c => c.Command)
-                .FirstOrDefault(cmd => cmd.StartsWith(input, StringComparison.OrdinalIgnoreCase));
-            return match ?? input;
+            var matches = allCommands
+            .Select(c => c.Command)
+            .Where(cmd => cmd.StartsWith(input, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+            if (matches.Count == 0)
+                return input;
+            if (matches.Count == 1)
+                return matches[0];
+
+            // Find common prefix
+            string prefix = matches[0];
+            foreach (var match in matches)
+            {
+                int i = 0;
+                while (i < prefix.Length && i < match.Length &&
+                       char.ToLowerInvariant(prefix[i]) == char.ToLowerInvariant(match[i]))
+                {
+                    i++;
+                }
+                prefix = prefix.Substring(0, i);
+                if (prefix.Length == 0)
+                    break;
+            }
+            return prefix;
         }
 
         /// <summary>
