@@ -30,7 +30,7 @@ namespace Achaman.Localization
             { "FabricatorSpeedMultiplier", "Multiplicateur de vitesse du Fabricator (côté hôte)" },
             { "HostOnly", "Ce mod fonctionne uniquement lorsque la progression est désactivée quand vous êtes l'hôte. Gardez le jeu équitable :D" },
             { "DisableProgress", "Désactiver la progression" },
-            { "DebugConsole", "Console de débogage (encore en état alpha)" },
+            { "DebugConsole", "Console de débogage (encore en état beta)" },
             { "ExecuteCommand", "Exécuter la commande" }
         };
 

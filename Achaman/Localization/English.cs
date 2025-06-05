@@ -30,7 +30,7 @@ namespace Achaman.Localization
             { "FabricatorSpeedMultiplier", "Fabricator Speed Multiplier (host-side)" },
             { "HostOnly", "This mod works only when progression is disabled when you're hosting. Keep the game fair :D" },
             { "DisableProgress", "Disable Progress" },
-            { "DebugConsole", "Debug Console (Still in alpha state)" },
+            { "DebugConsole", "Debug Console (Still in beta state)" },
             { "ExecuteCommand", "Execute Command" }
         };
 

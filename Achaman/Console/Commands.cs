@@ -47,6 +47,13 @@ namespace Achaman.Console
                 },
                 new ConsoleCommandInfo
                 {
+                    Command = "bindings",
+                    Description = "Lists all key bindings.",
+                    Method = typeof(Executor).GetMethod("GetAllBindings", BindingFlags.Public | BindingFlags.Static),
+                    Parameters = new ParameterInfo[] { }
+                },
+                new ConsoleCommandInfo
+                {
                     Command = "clear",
                     Description = "Clears the console output.",
                     Method = typeof(ConsoleGUI).GetMethod("ClearConsoleOutput", BindingFlags.Public | BindingFlags.Static),
