@@ -72,10 +72,6 @@ namespace Achaman.Console
             GUI.SetNextControlName("ConsoleInput");
             consoleInput = GUILayout.TextField(consoleInput, GUILayout.ExpandWidth(true));
 
-            // immediately give it focus once the GUI has been laid out
-            if (Event.current.type == EventType.Repaint)
-                GUI.FocusControl("ConsoleInput");
-
             if (e.type == EventType.KeyDown && GUI.GetNameOfFocusedControl() == "ConsoleInput")
             {
                 bool execute = false;
@@ -87,11 +83,12 @@ namespace Achaman.Console
                     // immediately focus the input so TextEditor exists for that control
                     GUI.FocusControl("ConsoleInput");
                 }
-                else if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter)
-                {
-                    execute = true;
-                    e.Use();
-                }
+                // Broken because the game opens game chat instead
+                // else if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter)
+                // {
+                //     execute = true;
+                //     e.Use();
+                // }
 
                 if (execute)
                 {
@@ -100,12 +97,9 @@ namespace Achaman.Console
             }
 
             // on repaint, if our field is focused, push the cursor to the end
-            if (Event.current.type == EventType.Repaint
-                && GUI.GetNameOfFocusedControl() == "ConsoleInput")
+            if (Event.current.type == EventType.Repaint && GUI.GetNameOfFocusedControl() == "ConsoleInput")
             {
-                var editor = (TextEditor)GUIUtility.GetStateObject(
-                                 typeof(TextEditor),
-                                 GUIUtility.keyboardControl);
+                var editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
                 if (editor != null)
                 {
                     editor.cursorIndex = consoleInput.Length;
