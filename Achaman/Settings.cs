@@ -1,7 +1,10 @@
 using System;
+using UnityEngine;
 
-namespace Achaman {
-    internal static class Settings {
+namespace Achaman
+{
+    internal static class Settings
+    {
         public static bool InfiniteAbility { get; set; } = Defaults.InfiniteAbility;
         public static bool PrintForFree { get; set; } = Defaults.PrintForFree;
         public static bool UpgradeFabricatorForFree { get; set; } = Defaults.UpgradeFabricatorForFree;
@@ -20,8 +23,10 @@ namespace Achaman {
         public static bool NoBiomassDepletion { get; set; } = Defaults.NoBiomassDepletion;
         public static float BiomassMultiplier { get; set; } = Defaults.BiomassMultiplier;
         public static float FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
+        public static KeyCode ConsoleToggleKey { get; set; } = Defaults.ConsoleToggleKey;
 
-        internal static void Reset() {
+        internal static void Reset()
+        {
             InfiniteAbility = Defaults.InfiniteAbility;
             PrintForFree = Defaults.PrintForFree;
             UpgradeFabricatorForFree = Defaults.UpgradeFabricatorForFree;
@@ -40,9 +45,11 @@ namespace Achaman {
             NoBiomassDepletion = Defaults.NoBiomassDepletion;
             BiomassMultiplier = Defaults.BiomassMultiplier;
             FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
+            ConsoleToggleKey = Defaults.ConsoleToggleKey;
         }
 
-        internal static class Defaults {
+        internal static class Defaults
+        {
             public static bool InfiniteAbility { get; } = false;
             public static bool PrintForFree { get; } = false;
             public static bool UpgradeFabricatorForFree { get; } = false;
@@ -61,6 +68,7 @@ namespace Achaman {
             public static bool NoBiomassDepletion { get; } = false;
             public static float BiomassMultiplier { get; } = 1f;
             public static float FabricatorSpeedMultiplier { get; } = 1f;
+            public static KeyCode ConsoleToggleKey { get; } = KeyCode.F2;
         }
     }
 }

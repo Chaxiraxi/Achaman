@@ -12,12 +12,11 @@ namespace Achaman.Console
         /// <summary>
         /// Executes a console command
         /// </summary>
-        public static void ExecuteCommand(string input, string[] args)
+        public static string ExecuteCommand(string input, string[] args)
         {
             if (allCommands == null)
             {
                 allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
-                AchamanPlugin.Logger.LogInfo($"Collected {allCommands.Count} console commands.");
             }
 
             // Merge quoted arguments into single arguments and remove quotes
@@ -58,34 +57,30 @@ namespace Achaman.Console
                 processedArgs.Add(currentArg); // Add any remaining arg if quotes were unbalanced
             }
 
-            var cmd = allCommands.FirstOrDefault(c => c.Command.Equals(input, StringComparison.OrdinalIgnoreCase));
-
             if (input.Equals("help", StringComparison.OrdinalIgnoreCase))
             {
-                foreach (var command in allCommands)
-                {
-                    AchamanPlugin.Logger.LogInfo($"{command.Command} - {command.Description}");
-                }
-                return;
+                var helpText = string.Join(
+                    Environment.NewLine,
+                    allCommands.Select(command => $"{command.Command} - {command.Description}")
+                );
+                return helpText;
             }
 
+            var cmd = allCommands.FirstOrDefault(c => c.Command.Equals(input, StringComparison.OrdinalIgnoreCase));
             if (cmd == null)
             {
-                AchamanPlugin.Logger.LogWarning($"Command not found: {input}");
-                return;
+                return $"Command not found: {input}";
             }
 
             object[] parsedArgs = ParseArguments(cmd.Parameters, processedArgs.ToArray());
             var result = cmd.Method.Invoke(null, parsedArgs);
-            if (result != null)
-            {
-                AchamanPlugin.Logger.LogInfo($"Command result: {result}");
-            }
 
             // record in history
             var full = input + (processedArgs.Count > 0 ? " " + string.Join(" ", processedArgs) : "");
             commandHistory.Add(full);
             historyIndex = commandHistory.Count;
+
+            return result != null ? $"Command result: {result}" : "";
         }
         public static string PreviousHistory()
         {

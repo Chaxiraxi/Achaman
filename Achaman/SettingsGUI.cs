@@ -12,7 +12,9 @@ namespace Achaman
     {
         private static bool isProgressDisabled = false;
         public override string Name() { return PluginInfo.PLUGIN_NAME + " Settings"; }
-        private static string consoleInput = "";
+        // private static string consoleInput = ""; // Removed
+        private bool waitingForKeyPress = false;
+        private string originalButtonText = string.Empty;
 
         public override void Draw()
         {
@@ -83,46 +85,23 @@ namespace Achaman
 
             if (Button(Language.Current.Get("LearnAllBlueprints"))) Patches.BlueprintManager.LearnAllSavedBlueprints();
 
-            Label(Language.Current.Get("DebugConsole"));
-            GUI.SetNextControlName("ConsoleInput");
-            consoleInput = TextField(consoleInput);
-
-            var e = Event.current;
-            if (GUI.GetNameOfFocusedControl() == "ConsoleInput" && e.type == EventType.KeyDown)
+            // Console Key Configuration
+            Label(Language.Current.Get("ConsoleToggleKeyLabel") + ": " + Settings.ConsoleToggleKey.ToString());
+            string buttonText = waitingForKeyPress ? Language.Current.Get("PressAnyKeyLabel") : Language.Current.Get("ChangeKeyButtonLabel");
+            if (Button(buttonText))
             {
-                if (e.keyCode == KeyCode.UpArrow)
+                if (!waitingForKeyPress)
                 {
-                    consoleInput = Executor.PreviousHistory();
-                    e.Use();
-                }
-                else if (e.keyCode == KeyCode.DownArrow)
-                {
-                    consoleInput = Executor.NextHistory();
-                    e.Use();
-                }
-                else if (e.keyCode == KeyCode.Tab)
-                {
-                    consoleInput = Executor.GetAutoComplete(consoleInput);
-                    e.Use();
-                }
-                else if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter)
-                {
-                    string[] parts = consoleInput.Split(' ');
-                    string command = parts[0];
-                    string[] args = parts.Skip(1).ToArray();
-                    Executor.ExecuteCommand(command, args);
-                    consoleInput = "";
-                    e.Use();
+                    waitingForKeyPress = true;
+                    originalButtonText = buttonText;
                 }
             }
 
-            if (Button(Language.Current.Get("ExecuteCommand")))
+            if (waitingForKeyPress && Event.current.isKey && Event.current.type == EventType.KeyDown)
             {
-                string[] parts = consoleInput.Split(' ');
-                string command = parts[0];
-                string[] args = parts.Skip(1).ToArray();
-                Console.Executor.ExecuteCommand(command, args);
-                consoleInput = "";
+                Settings.ConsoleToggleKey = Event.current.keyCode;
+                waitingForKeyPress = false;
+                Event.current.Use(); // Consume the event so it doesn't trigger other actions
             }
 
             Label(Language.Current.Get("ResetAll"));
