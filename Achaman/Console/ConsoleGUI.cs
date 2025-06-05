@@ -23,6 +23,7 @@ namespace Achaman.Console
         private const float ResizeBorderSize = 10f;
 
         private bool initialized = false;
+        private static ConsoleGUI Instance;
         private const float WindowProportion = 0.35f; // 35% of screen size
 
         void OnGUI()
@@ -35,6 +36,7 @@ namespace Achaman.Console
                 float width = Mathf.Max(MinWidth, Screen.width * WindowProportion);
                 float height = Mathf.Max(MinHeight, Screen.height * WindowProportion);
                 windowRect = new Rect(20, 20, width, height);
+                Instance = this; // Set the static instance
                 initialized = true;
             }
 
@@ -149,6 +151,12 @@ namespace Achaman.Console
             }
 
             GUI.DragWindow();
+        }
+
+        public static void ClearConsoleOutput()
+        {
+            ConsoleGUI.Instance.consoleOutput = "";
+            ConsoleGUI.Instance.scrollPosition = Vector2.zero; // Reset scroll position
         }
 
         private void ExecuteCurrentCommand()

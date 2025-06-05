@@ -166,7 +166,7 @@ namespace Achaman.Console
             return parsed;
         }
 
-        public static string HelpCommands()
+        public static string HelpCommand()
         {
             if (allCommands == null)
             {

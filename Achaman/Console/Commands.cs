@@ -27,7 +27,7 @@ namespace Achaman.Console
                 {
                     Command = "help",
                     Description = "Displays a list of available console commands.",
-                    Method = typeof(Executor).GetMethod("HelpCommands", BindingFlags.Public | BindingFlags.Static),
+                    Method = typeof(Executor).GetMethod("HelpCommand", BindingFlags.Public | BindingFlags.Static),
                     Parameters = new ParameterInfo[] { }
                 },
                 // Manually add help, bind and unbind commands
@@ -35,14 +35,21 @@ namespace Achaman.Console
                 {
                     Command = "bind",
                     Description = "Binds a key to a console command.",
-                    Method = typeof(Executor).GetMethod("BindKey", BindingFlags.Public | BindingFlags.Static),
+                    Method = typeof(Executor).GetMethod("BindCommand", BindingFlags.Public | BindingFlags.Static),
                     Parameters = new ParameterInfo[] { }
                 },
                 new ConsoleCommandInfo
                 {
                     Command = "unbind",
                     Description = "Unbinds a key from a console command.",
-                    Method = typeof(Executor).GetMethod("UnbindKey", BindingFlags.Public | BindingFlags.Static),
+                    Method = typeof(Executor).GetMethod("UnbindCommand", BindingFlags.Public | BindingFlags.Static),
+                    Parameters = new ParameterInfo[] { }
+                },
+                new ConsoleCommandInfo
+                {
+                    Command = "clear",
+                    Description = "Clears the console output.",
+                    Method = typeof(ConsoleGUI).GetMethod("ClearConsoleOutput", BindingFlags.Public | BindingFlags.Static),
                     Parameters = new ParameterInfo[] { }
                 }
             };
