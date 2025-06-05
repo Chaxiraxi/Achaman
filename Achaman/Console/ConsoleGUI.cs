@@ -11,6 +11,14 @@ namespace Achaman.Console
         private const int WindowId = 12345; // Unique ID for the window
         private string consoleOutput = "";
 
+        // ─── new fields for resizing ─────────────────────────────
+        private bool isResizing = false;
+        private Vector2 resizeStartMouse;
+        private Vector2 resizeStartSize;
+        private const float MinWidth = 200f;
+        private const float MinHeight = 100f;
+        private const float ResizeBorderSize = 10f;
+
         void OnGUI()
         {
             if (!IsVisible) return;
@@ -76,6 +84,41 @@ namespace Achaman.Console
             }
 
             GUILayout.EndVertical();
+
+            // ─── resize handle ───────────────────────────────────────
+            Rect resizeRect = new Rect(
+                windowRect.width - ResizeBorderSize,
+                windowRect.height - ResizeBorderSize,
+                ResizeBorderSize,
+                ResizeBorderSize
+            );
+            GUI.Box(resizeRect, "");
+
+            // Use the existing 'e' variable from above
+            if (e.type == EventType.MouseDown && resizeRect.Contains(e.mousePosition))
+            {
+                isResizing = true;
+                resizeStartMouse = e.mousePosition;
+                resizeStartSize = new Vector2(windowRect.width, windowRect.height);
+                e.Use();
+            }
+            if (isResizing)
+            {
+                if (e.type == EventType.MouseDrag)
+                {
+                    float w = Mathf.Max(MinWidth, resizeStartSize.x + (e.mousePosition.x - resizeStartMouse.x));
+                    float h = Mathf.Max(MinHeight, resizeStartSize.y + (e.mousePosition.y - resizeStartMouse.y));
+                    windowRect.width = w;
+                    windowRect.height = h;
+                    e.Use();
+                }
+                else if (e.type == EventType.MouseUp)
+                {
+                    isResizing = false;
+                    e.Use();
+                }
+            }
+
             GUI.DragWindow();
         }
 
