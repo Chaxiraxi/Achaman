@@ -20,6 +20,44 @@ namespace Achaman.Console
                 AchamanPlugin.Logger.LogInfo($"Collected {allCommands.Count} console commands.");
             }
 
+            // Merge quoted arguments into single arguments and remove quotes
+            var processedArgs = new List<string>();
+            bool inQuotes = false;
+            string currentArg = "";
+            foreach (var arg in args)
+            {
+                if (!inQuotes)
+                {
+                    if (arg.StartsWith("\"") && !arg.EndsWith("\""))
+                    {
+                        inQuotes = true;
+                        currentArg = arg.TrimStart('\"');
+                    }
+                    else if (arg.StartsWith("\"") && arg.EndsWith("\""))
+                    {
+                        processedArgs.Add(arg.Trim('\"'));
+                    }
+                    else
+                    {
+                        processedArgs.Add(arg);
+                    }
+                }
+                else
+                {
+                    currentArg += " " + arg;
+                    if (arg.EndsWith("\""))
+                    {
+                        inQuotes = false;
+                        processedArgs.Add(currentArg.TrimEnd('\"'));
+                        currentArg = "";
+                    }
+                }
+            }
+            if (inQuotes && !string.IsNullOrEmpty(currentArg))
+            {
+                processedArgs.Add(currentArg); // Add any remaining arg if quotes were unbalanced
+            }
+
             var cmd = allCommands.FirstOrDefault(c => c.Command.Equals(input, StringComparison.OrdinalIgnoreCase));
 
             if (input.Equals("help", StringComparison.OrdinalIgnoreCase))
@@ -37,7 +75,7 @@ namespace Achaman.Console
                 return;
             }
 
-            object[] parsedArgs = ParseArguments(cmd.Parameters, args);
+            object[] parsedArgs = ParseArguments(cmd.Parameters, processedArgs.ToArray());
             var result = cmd.Method.Invoke(null, parsedArgs);
             if (result != null)
             {
@@ -45,11 +83,10 @@ namespace Achaman.Console
             }
 
             // record in history
-            var full = input + (args.Length > 0 ? " " + string.Join(" ", args) : "");
+            var full = input + (processedArgs.Count > 0 ? " " + string.Join(" ", processedArgs) : "");
             commandHistory.Add(full);
             historyIndex = commandHistory.Count;
         }
-
         public static string PreviousHistory()
         {
             if (commandHistory.Count == 0) return "";
