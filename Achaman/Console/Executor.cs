@@ -4,6 +4,10 @@ using System.Linq;
 using BepInEx;
 using UnityEngine;
 
+// TODO: Prevent bindings from working when the console is visible
+// Focus text field (again) when console is opened
+// Find a way to prevent keys input from being processed by the game when the console is open
+// Setup a centralized general key binding system that can be used anywhere in the plugin
 namespace Achaman.Console
 {
     public static class Executor
@@ -61,29 +65,6 @@ namespace Achaman.Console
                 processedArgs.Add(currentArg); // Add any remaining arg if quotes were unbalanced
             }
 
-            // if (input.Equals("help", StringComparison.OrdinalIgnoreCase))
-            // {
-            //     var helpText = string.Join(
-            //         Environment.NewLine,
-            //         allCommands.Select(command => $"{command.Command} - {command.Description}")
-            //     );
-            //     return helpText;
-            // }
-
-            // if (input.Equals("bind", StringComparison.OrdinalIgnoreCase))
-            // {
-            //     if (processedArgs.Count < 2)
-            //         return "Usage: bind <key> <command>";
-            //     return BindCommand(processedArgs[0], string.Join(" ", processedArgs.Skip(1)));
-            // }
-
-            // if (input.Equals("unbind", StringComparison.OrdinalIgnoreCase))
-            // {
-            //     if (processedArgs.Count < 1)
-            //         return "Usage: unbind <key>";
-            //     return UnbindCommand(processedArgs[0]);
-            // }
-
             var cmd = allCommands.FirstOrDefault(c => c.Command.Equals(input, StringComparison.OrdinalIgnoreCase));
             if (cmd == null)
             {
@@ -93,9 +74,14 @@ namespace Achaman.Console
             object[] parsedArgs = ParseArguments(cmd.Parameters, processedArgs.ToArray());
             var result = cmd.Method.Invoke(null, parsedArgs);
 
-            // record in history
+            // record in history, but avoid duplicates
             var full = input + (processedArgs.Count > 0 ? " " + string.Join(" ", processedArgs) : "");
-            commandHistory.Add(full);
+
+            // Only add to history if it's different from the last command
+            if (commandHistory.Count == 0 || !commandHistory[commandHistory.Count - 1].Equals(full, StringComparison.OrdinalIgnoreCase))
+            {
+                commandHistory.Add(full);
+            }
             historyIndex = commandHistory.Count;
 
             return result != null ? $"Command result: {result}" : "";
