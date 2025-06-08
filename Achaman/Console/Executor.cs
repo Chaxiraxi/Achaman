@@ -270,6 +270,7 @@ namespace Achaman.Console
         /// <returns>The results of the command executions</returns>
         public static string CheckKeyBindings()
         {
+            if (AchamanPlugin.SHOULD_DISABLE_PROGRESS) return string.Empty; // Prevent execution when progress is not disabled
             List<string> results = new List<string>();
 
             // Check each key in the keyBindings dictionary

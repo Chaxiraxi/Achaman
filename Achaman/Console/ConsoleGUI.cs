@@ -28,7 +28,7 @@ namespace Achaman.Console
 
         void OnGUI()
         {
-            if (!IsVisible) return;
+            if (!IsVisible || AchamanPlugin.SHOULD_DISABLE_PROGRESS) return;
 
             // Initialize windowRect to 35% of screen size, only once
             if (!initialized)
@@ -125,7 +125,6 @@ namespace Achaman.Console
             );
             GUI.Box(resizeRect, "");
 
-            // Use the existing 'e' variable from above
             if (e.type == EventType.MouseDown && resizeRect.Contains(e.mousePosition))
             {
                 isResizing = true;
