@@ -105,10 +105,33 @@ namespace Achaman.Console
             if (allCommands == null)
                 allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
 
+            var tokens = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Special handling for 'bind' command
+            if (tokens.Length >= 2 && tokens[0].Equals("bind", StringComparison.OrdinalIgnoreCase))
+            {
+                // If user is typing the command to bind (3rd token or more), recursively autocomplete the command part
+                if (tokens.Length >= 3)
+                {
+                    // Reconstruct the command part after the key
+                    string commandPart = string.Join(" ", tokens.Skip(2));
+                    string autoCompleted = GetAutoComplete(commandPart);
+
+                    // Only replace the command part if it actually autocompleted something
+                    if (!string.Equals(commandPart, autoCompleted, StringComparison.OrdinalIgnoreCase))
+                        return $"bind {tokens[1]} {autoCompleted}";
+                    else
+                        return input;
+                }
+                // If user is typing the key or just typed 'bind', do not autocomplete further
+                return input;
+            }
+
+            // Default: autocomplete the command itself
             var matches = allCommands
-            .Select(c => c.Command)
-            .Where(cmd => cmd.StartsWith(input, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+                .Select(c => c.Command)
+                .Where(cmd => cmd.StartsWith(input, StringComparison.OrdinalIgnoreCase))
+                .ToList();
 
             if (matches.Count == 0)
                 return input;
