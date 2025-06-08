@@ -12,11 +12,11 @@ namespace Achaman.Console
 {
     public static class Executor
     {
-        private static List<ConsoleCommandInfo> allCommands;
+        public static List<ConsoleCommandInfo> allCommands;
         private static List<string> commandHistory = new List<string>();
         private static int historyIndex = -1;
         // Update to use KeyCode instead of ConsoleKey for better Unity integration
-        private static Dictionary<KeyCode, List<string>> keyBindings = new Dictionary<KeyCode, List<string>>();
+        public static Dictionary<KeyCode, List<string>> keyBindings = new Dictionary<KeyCode, List<string>>();
         /// <summary>
         /// Executes a console command
         /// </summary>
@@ -175,71 +175,10 @@ namespace Achaman.Console
             return parsed;
         }
 
-        public static string HelpCommand()
-        {
-            if (allCommands == null)
-            {
-                allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
-            }
-
-            var helpText = new List<string>();
-            foreach (var command in allCommands)
-            {
-                helpText.Add($"{command.Command} - {command.Description}");
-            }
-            return string.Join(Environment.NewLine, helpText);
-        }
-
-        /// <summary>
-        /// Binds a command to a specific key
-        /// </summary>
-        /// <param name="key">The key to bind to</param>
-        /// <param name="command">The command to execute when the key is pressed</param>
-        /// <returns>Message indicating the binding result</returns>
-        public static string BindCommand(string key, string command)
-        {
-            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(command))
-                return "Usage: bind <key> <command>";
-
-            KeyCode keyCode;
-            if (!TryParseKey(key, out keyCode))
-                return $"Invalid key: {key}";
-
-            if (!keyBindings.ContainsKey(keyCode))
-                keyBindings[keyCode] = new List<string>();
-
-            keyBindings[keyCode].Add(command);
-            return $"Bound '{command}' to key '{key}'";
-        }
-
-        /// <summary>
-        /// Removes all bindings for a specific key
-        /// </summary>
-        /// <param name="key">The key to unbind</param>
-        /// <returns>Message indicating the unbinding result</returns>
-        public static string UnbindCommand(string key)
-        {
-            if (string.IsNullOrEmpty(key))
-                return "Usage: unbind <key>";
-
-            KeyCode keyCode;
-            if (!TryParseKey(key, out keyCode))
-                return $"Invalid key: {key}";
-
-            if (keyBindings.ContainsKey(keyCode))
-            {
-                int count = keyBindings[keyCode].Count;
-                keyBindings.Remove(keyCode);
-                return $"Unbound {count} command(s) from key '{key}'";
-            }
-
-            return $"No binding found for key '{key}'";
-        }
-
         /// <summary>
         /// Tries to parse a string representation of a key to a Unity KeyCode
         /// </summary>
-        private static bool TryParseKey(string keyString, out KeyCode keyCode)
+        internal static bool TryParseKey(string keyString, out KeyCode keyCode)
         {
             keyCode = KeyCode.None;
             if (string.IsNullOrEmpty(keyString))
@@ -316,27 +255,6 @@ namespace Achaman.Console
             }
 
             return string.Join(Environment.NewLine, results);
-        }
-
-        /// <summary>
-        /// Gets all current key bindings
-        /// </summary>
-        /// <returns>A string containing all current key bindings</returns>
-        public static string GetAllBindings()
-        {
-            if (keyBindings.Count == 0)
-                return "No key bindings set";
-
-            List<string> bindingStrings = new List<string>();
-            foreach (var keyPair in keyBindings)
-            {
-                foreach (string command in keyPair.Value)
-                {
-                    bindingStrings.Add($"{keyPair.Key}: {command}");
-                }
-            }
-
-            return string.Join(Environment.NewLine, bindingStrings);
         }
     }
 }
