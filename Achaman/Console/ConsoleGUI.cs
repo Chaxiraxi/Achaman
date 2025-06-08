@@ -170,7 +170,20 @@ namespace Achaman.Console
                 AchamanPlugin.Logger.LogInfo($"Command result: {result}");
                 consoleOutput += $"\n> {consoleInput}\n{result}";
                 consoleInput = ""; // Clear input after execution
+
+                // Scroll to the bottom after adding new content
+                // We need to defer this to next frame because the UI needs to update first
+                StartCoroutine(ScrollToBottomNextFrame());
             }
+        }
+
+        private System.Collections.IEnumerator ScrollToBottomNextFrame()
+        {
+            // Wait for the end of the frame so the UI can update
+            yield return new WaitForEndOfFrame();
+
+            // Set scroll position to bottom
+            scrollPosition = new Vector2(0, float.MaxValue);
         }
     }
 }
