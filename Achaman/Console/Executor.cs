@@ -4,7 +4,7 @@ using System.Linq;
 using BepInEx;
 using UnityEngine;
 
-// TODO: Prevent bindings from working when the console is visible
+// TODO:
 // Focus text field (again) when console is opened
 // Find a way to prevent keys input from being processed by the game when the console is open
 // Setup a centralized general key binding system that can be used anywhere in the plugin
@@ -270,7 +270,7 @@ namespace Achaman.Console
         /// <returns>The results of the command executions</returns>
         public static string CheckKeyBindings()
         {
-            if (AchamanPlugin.SHOULD_DISABLE_PROGRESS) return string.Empty; // Prevent execution when progress is not disabled
+            if (ConsoleGUI.IsVisible || AchamanPlugin.SHOULD_DISABLE_PROGRESS) return string.Empty; // Prevent execution when progress is not disabled
             List<string> results = new List<string>();
 
             // Check each key in the keyBindings dictionary
@@ -286,8 +286,7 @@ namespace Achaman.Console
                             string cmd = parts[0];
                             string[] args = parts.Length > 1 ? parts.Skip(1).ToArray() : new string[0];
                             string result = ExecuteCommand(cmd, args);
-                            if (!string.IsNullOrEmpty(result))
-                                results.Add(result);
+                            if (!string.IsNullOrEmpty(result)) results.Add(result);
                         }
                     }
                 }
