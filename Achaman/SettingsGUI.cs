@@ -3,8 +3,6 @@ using UnityEngine;
 using VoidManager.CustomGUI;
 using Achaman.Localization;
 using VoidManager;
-using System.Linq;
-using Achaman.Console;  // added for Executor
 
 namespace Achaman
 {
@@ -12,7 +10,6 @@ namespace Achaman
     {
         private static bool isProgressDisabled = false;
         public override string Name() { return PluginInfo.PLUGIN_NAME + " Settings"; }
-        // private static string consoleInput = ""; // Removed
         private bool waitingForKeyPress = false;
         private string originalButtonText = string.Empty;
 
@@ -44,6 +41,7 @@ namespace Achaman
             Settings.NoBreakerTrip = Toggle(Settings.NoBreakerTrip, Language.Current.Get("NoBreakerTrip"));
             Settings.NoJetpackOxygenDepletion = Toggle(Settings.NoJetpackOxygenDepletion, Language.Current.Get("NoJetpackOxygenDepletion"));
             Settings.NoBiomassDepletion = Toggle(Settings.NoBiomassDepletion, Language.Current.Get("NoBiomassDepletion"));
+            Settings.RemoveMutatorLimit = Toggle(Settings.RemoveMutatorLimit, Language.Current.Get("RemoveMutatorLimit"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
             Settings.MultiplyRecycledAlloy = Mathf.Round(HorizontalSlider(Settings.MultiplyRecycledAlloy, 0f, 10f) * 10f) / 10f;

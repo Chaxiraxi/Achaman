@@ -31,7 +31,8 @@ namespace Achaman.Localization
             { "HostOnly", "This mod works only when progression is disabled when you're hosting. Keep the game fair :D" },
             { "DisableProgress", "Disable Progress" },
             { "DebugConsole", "Debug Console (Still in beta state)" },
-            { "ExecuteCommand", "Execute Command" }
+            { "ExecuteCommand", "Execute Command" },
+            { "RemoveMutatorLimit", "Remove Mutator Limit (host-side)" }
         };
 
         public string Get(string key)

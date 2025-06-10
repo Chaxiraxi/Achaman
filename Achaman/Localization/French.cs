@@ -31,7 +31,8 @@ namespace Achaman.Localization
             { "HostOnly", "Ce mod fonctionne uniquement lorsque la progression est désactivée quand vous êtes l'hôte. Gardez le jeu équitable :D" },
             { "DisableProgress", "Désactiver la progression" },
             { "DebugConsole", "Console de débogage (encore en état beta)" },
-            { "ExecuteCommand", "Exécuter la commande" }
+            { "ExecuteCommand", "Exécuter la commande" },
+            { "RemoveMutatorLimit", "Supprimer la limite de modificateur (côté hôte)" }
         };
 
         public string Get(string key)

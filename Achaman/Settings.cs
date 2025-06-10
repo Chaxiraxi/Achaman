@@ -11,7 +11,7 @@ namespace Achaman
         public static float MultiplyRecycledAlloy { get; set; } = Defaults.MultiplyRecycledAlloy;
         public static float JetpackThrustMultiplier { get; set; } = Defaults.JetpackThrustMultiplier;
         public static float JetpackDashForceMultiplier { get; set; } = Defaults.JetpackDashForceMultiplier;
-        public static float TotalOwnedPoints { get; set; } = Defaults.TotalOwnedPoints;
+        public static int TotalOwnedPoints { get; set; } = Defaults.TotalOwnedPoints;
         public static bool NoPlayerDamage { get; set; } = Defaults.NoPlayerDamage;
         public static bool ManipulateAtmosphere { get; set; } = Defaults.ManipulateAtmosphere;
         public static float ShipTemperature { get; set; } = Defaults.ShipTemperature;
@@ -24,6 +24,7 @@ namespace Achaman
         public static float BiomassMultiplier { get; set; } = Defaults.BiomassMultiplier;
         public static float FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
         public static KeyCode ConsoleToggleKey { get; set; } = Defaults.ConsoleToggleKey;
+        public static bool RemoveMutatorLimit { get; set; } = Defaults.RemoveMutatorLimit;
 
         internal static void Reset()
         {
@@ -46,29 +47,31 @@ namespace Achaman
             BiomassMultiplier = Defaults.BiomassMultiplier;
             FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
             ConsoleToggleKey = Defaults.ConsoleToggleKey;
+            RemoveMutatorLimit = Defaults.RemoveMutatorLimit;
         }
 
         internal static class Defaults
         {
-            public static bool InfiniteAbility { get; } = false;
-            public static bool PrintForFree { get; } = false;
-            public static bool UpgradeFabricatorForFree { get; } = false;
-            public static float MultiplyRecycledAlloy { get; } = 1f;
-            public static float JetpackThrustMultiplier { get; } = 1f;
-            public static float JetpackDashForceMultiplier { get; } = 1f;
-            public static float TotalOwnedPoints { get; set; } = 31;
-            public static bool NoPlayerDamage { get; } = false;
-            public static bool ManipulateAtmosphere { get; } = false;
-            public static float ShipTemperature { get; } = 21f;
-            public static float ShipPressure { get; } = 1f;
-            public static float ShipOxygen { get; } = 1f;
-            public static bool NoShipDamage { get; } = false;
-            public static bool NoBreakerTrip { get; } = false;
-            public static bool NoJetpackOxygenDepletion { get; } = false;
-            public static bool NoBiomassDepletion { get; } = false;
-            public static float BiomassMultiplier { get; } = 1f;
-            public static float FabricatorSpeedMultiplier { get; } = 1f;
-            public static KeyCode ConsoleToggleKey { get; } = KeyCode.F2;
+            public const bool InfiniteAbility = false;
+            public const bool PrintForFree = false;
+            public const bool UpgradeFabricatorForFree = false;
+            public const float MultiplyRecycledAlloy = 1f;
+            public const float JetpackThrustMultiplier = 1f;
+            public const float JetpackDashForceMultiplier = 1f;
+            public static int TotalOwnedPoints = 31;
+            public const bool NoPlayerDamage = false;
+            public const bool ManipulateAtmosphere = false;
+            public const float ShipTemperature = 21f;
+            public const float ShipPressure = 1f;
+            public const float ShipOxygen = 1f;
+            public const bool NoShipDamage = false;
+            public const bool NoBreakerTrip = false;
+            public const bool NoJetpackOxygenDepletion = false;
+            public const bool NoBiomassDepletion = false;
+            public const float BiomassMultiplier = 1f;
+            public const float FabricatorSpeedMultiplier = 1f;
+            public const KeyCode ConsoleToggleKey = KeyCode.F2;
+            public const bool RemoveMutatorLimit = false;
         }
     }
 }
