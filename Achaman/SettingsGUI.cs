@@ -11,7 +11,6 @@ namespace Achaman
         private static bool isProgressDisabled = false;
         public override string Name() { return PluginInfo.PLUGIN_NAME + " Settings"; }
         private bool waitingForKeyPress = false;
-        private string originalButtonText = string.Empty;
 
         public override void Draw()
         {
@@ -97,7 +96,6 @@ namespace Achaman
                 if (!waitingForKeyPress)
                 {
                     waitingForKeyPress = true;
-                    originalButtonText = buttonText;
                 }
             }
 

@@ -25,7 +25,56 @@ namespace Achaman.Console
         /// <returns>A list of ConsoleCommandInfo containing command details.</returns>
         public static List<ConsoleCommandInfo> CollectConsoleCommands()
         {
-            var commands = new List<ConsoleCommandInfo>
+            var commands = AdditionalCommands.InitializeCustomCommands();
+
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (var type in assembly.GetTypes())
+                {
+                    foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
+                    {
+                        var attribute = method.GetCustomAttributes(false).FirstOrDefault(attr => attr.GetType().Name == "ConsoleMethodAttribute");
+
+                        if (attribute != null)
+                        {
+                            // Use reflection to access the properties
+                            var attrType = attribute.GetType();
+                            var commandProp = attrType.GetProperty("Command");
+
+                            var descProp = attrType.GetProperty("Description");
+
+                            string command = commandProp?.GetValue(attribute) as string ?? method.Name;
+                            if (command.Equals("bind", StringComparison.OrdinalIgnoreCase) || command.Equals("unbind", StringComparison.OrdinalIgnoreCase))
+                            {
+                                // Skip 'bind' and 'unbind' commands since we implement custom versions
+                                continue;
+                            }
+                            string description = descProp?.GetValue(attribute) as string ?? "";
+
+                            commands.Add(new ConsoleCommandInfo
+                            {
+                                Command = command,
+                                Description = description,
+                                Method = method,
+                                Parameters = method.GetParameters()
+                            });
+                            // Log the command for debugging purposes
+                            AchamanPlugin.Logger.LogInfo($"Found command: {command} - {description}");
+                        }
+                    }
+                }
+            }
+
+            return commands;
+        }
+    }
+}
+
+internal static class AdditionalCommands
+{
+    public static List<ConsoleCommandInfo> InitializeCustomCommands()
+    {
+        var commands = new List<ConsoleCommandInfo>
             {
                 new ConsoleCommandInfo
                 {
@@ -62,75 +111,38 @@ namespace Achaman.Console
                     Description = "Clears the console output.",
                     Method = typeof(ConsoleGUI).GetMethod("ClearConsoleOutput", BindingFlags.Public | BindingFlags.Static),
                     Parameters = new ParameterInfo[] { }
-                }
+                },
+                new ConsoleCommandInfo
+                {
+                    Command = "find",
+                    Description = "Finds a command by its name or part of its name.",
+                    Method = typeof(AdditionalCommands).GetMethod("FindCommand", BindingFlags.Public | BindingFlags.Static),
+                    Parameters = typeof(AdditionalCommands).GetMethod("FindCommand", BindingFlags.Public | BindingFlags.Static).GetParameters()
+                },
             };
 
-            if (!AchamanPlugin.SHOULD_DISABLE_PROGRESS)
+        if (!AchamanPlugin.SHOULD_DISABLE_PROGRESS)
+        {
+            commands.Add(new ConsoleCommandInfo
             {
-                commands.Add(new ConsoleCommandInfo
-                {
-                    Command = "disable_progress",
-                    Description = "Disables progression for the whole session using Void Manager.",
-                    Method = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("DisableProgression", BindingFlags.Public | BindingFlags.Static),
-                    Parameters = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("DisableProgression", BindingFlags.Public | BindingFlags.Static).GetParameters()
-                });
+                Command = "disable_progress",
+                Description = "Disables progression for the whole session using Void Manager.",
+                Method = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("DisableProgression", BindingFlags.Public | BindingFlags.Static),
+                Parameters = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("DisableProgression", BindingFlags.Public | BindingFlags.Static).GetParameters()
+            });
 
-                commands.Add(new ConsoleCommandInfo
-                {
-                    Command = "enable_progress",
-                    Description = "Enables progression for the whole session using Void Manager.",
-                    Method = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("EnableProgression", BindingFlags.NonPublic | BindingFlags.Static),
-                    // Parameters = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("EnableProgression", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()
-                    Parameters = new ParameterInfo[] { }
-                });
-            }
-
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            commands.Add(new ConsoleCommandInfo
             {
-                foreach (var type in assembly.GetTypes())
-                {
-                    foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
-                    {
-                        var attribute = method.GetCustomAttributes(false)
-                            .FirstOrDefault(attr => attr.GetType().Name == "ConsoleMethodAttribute");
-
-                        if (attribute != null)
-                        {
-                            // Use reflection to access the properties
-                            var attrType = attribute.GetType();
-                            var commandProp = attrType.GetProperty("Command");
-
-                            var descProp = attrType.GetProperty("Description");
-
-                            string command = commandProp?.GetValue(attribute) as string ?? method.Name;
-                            if (command.Equals("bind", StringComparison.OrdinalIgnoreCase) || command.Equals("unbind", StringComparison.OrdinalIgnoreCase))
-                            {
-                                // Skip 'bind' and 'unbind' commands
-                                continue;
-                            }
-                            string description = descProp?.GetValue(attribute) as string ?? "";
-
-                            commands.Add(new ConsoleCommandInfo
-                            {
-                                Command = command,
-                                Description = description,
-                                Method = method,
-                                Parameters = method.GetParameters()
-                            });
-                            // Log the command for debugging purposes
-                            AchamanPlugin.Logger.LogInfo($"Found command: {command} - {description}");
-                        }
-                    }
-                }
-            }
-
-            return commands;
+                Command = "enable_progress",
+                Description = "Enables progression for the whole session using Void Manager.",
+                Method = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("EnableProgression", BindingFlags.NonPublic | BindingFlags.Static),
+                // Parameters = typeof(VoidManager.Progression.ProgressionHandler).GetMethod("EnableProgression", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()
+                Parameters = new ParameterInfo[] { }
+            });
         }
-    }
-}
 
-internal static class AdditionalCommands
-{
+        return commands;
+    }
     public static string HelpCommand()
     {
         if (allCommands == null)
@@ -216,8 +228,29 @@ internal static class AdditionalCommands
     /// <summary>
     /// Disables progression for the whole session using Void Manager.
     /// </summary>
-    public static void DisableProgression()
+    public static void DisableProgression() => VoidManager.Progression.ProgressionHandler.DisableProgression(PluginInfo.PLUGIN_GUID);
+
+    /// <summary>
+    /// Finds a command by its name or part of its name.
+    /// </summary>
+    public static string FindCommand(string command)
     {
-        VoidManager.Progression.ProgressionHandler.DisableProgression(PluginInfo.PLUGIN_GUID);
+        if (string.IsNullOrEmpty(command))
+        {
+            return "Usage: find <command>";
+        }
+
+        var foundCommands = allCommands.Where(c => c.Command.IndexOf(command, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+        if (foundCommands.Count == 0)
+        {
+            return $"No commands found matching '{command}'";
+        }
+
+        var result = new List<string>();
+        foreach (var cmd in foundCommands)
+        {
+            result.Add($"{cmd.Command} - {cmd.Description}");
+        }
+        return string.Join(Environment.NewLine, result);
     }
 }
