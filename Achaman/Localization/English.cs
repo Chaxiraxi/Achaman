@@ -35,7 +35,8 @@ namespace Achaman.Localization
             { "RemoveMutatorLimit", "Remove Mutator Limit (host-side)" },
             { "ConsoleToggleKeyLabel", "Console Toggle Key" },
             { "PressAnyKeyLabel", "Press any key..." },
-            { "ChangeKeyButtonLabel", "Change Key" }
+            { "ChangeKeyButtonLabel", "Change Key" },
+            { "SpoofVanillaRoom", "Spoof the current session as being vanilla (host-side)" }
         };
 
         public string Get(string key)

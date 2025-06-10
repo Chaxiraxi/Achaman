@@ -47,6 +47,7 @@ namespace Achaman
             Settings.NoJetpackOxygenDepletion = Toggle(Settings.NoJetpackOxygenDepletion, Language.Current.Get("NoJetpackOxygenDepletion"));
             Settings.NoBiomassDepletion = Toggle(Settings.NoBiomassDepletion, Language.Current.Get("NoBiomassDepletion"));
             Settings.RemoveMutatorLimit = Toggle(Settings.RemoveMutatorLimit, Language.Current.Get("RemoveMutatorLimit"));
+            Settings.SpoofVanillaRoom = Toggle(Settings.SpoofVanillaRoom, Language.Current.Get("SpoofVanillaRoom"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
             Settings.MultiplyRecycledAlloy = Mathf.Round(HorizontalSlider(Settings.MultiplyRecycledAlloy, 0f, 10f) * 10f) / 10f;

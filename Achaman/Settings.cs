@@ -25,6 +25,7 @@ namespace Achaman
         public static float FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
         public static KeyCode ConsoleToggleKey { get; set; } = Defaults.ConsoleToggleKey;
         public static bool RemoveMutatorLimit { get; set; } = Defaults.RemoveMutatorLimit;
+        public static bool SpoofVanillaRoom { get; set; } = Defaults.SpoofVanillaRoom;
 
         internal static void Reset()
         {
@@ -48,6 +49,7 @@ namespace Achaman
             FabricatorSpeedMultiplier = Defaults.FabricatorSpeedMultiplier;
             ConsoleToggleKey = Defaults.ConsoleToggleKey;
             RemoveMutatorLimit = Defaults.RemoveMutatorLimit;
+            SpoofVanillaRoom = Defaults.SpoofVanillaRoom;
         }
 
         internal static class Defaults
@@ -72,6 +74,7 @@ namespace Achaman
             public const float FabricatorSpeedMultiplier = 1f;
             public const KeyCode ConsoleToggleKey = KeyCode.F2;
             public const bool RemoveMutatorLimit = false;
+            public const bool SpoofVanillaRoom = false;
         }
     }
 }
