@@ -15,9 +15,15 @@ namespace Achaman
 
         public override void Draw()
         {
-            Label(Language.Current.Get("LanguageLabel") + ": " + (Language.Current is English ? "English" : "French"));
+            // string currentLanguageName = Language.Current is English ? "English" :
+            //                            Language.Current is French ? "French" :
+            //                            Language.Current is German ? "German" :
+            //                            Language.Current is Italian ? "Italian" : "Unknown";
+            // Label(Language.Current.Get("LanguageLabel") + ": " + currentLanguageName);
             if (Button("English")) Language.SetLanguage(new English());
             if (Button("French")) Language.SetLanguage(new French());
+            if (Button("German")) Language.SetLanguage(new German());
+            if (Button("Italian")) Language.SetLanguage(new Italian());
 
             // Disables progression to keep the game fair.
             if (!isProgressDisabled && AchamanPlugin.SHOULD_DISABLE_PROGRESS)

@@ -14,7 +14,7 @@ namespace Achaman.Localization
             { "JetpackNote", "Note: Cela doit être configuré dans le Hub pour prendre effet." },
             { "PerkPoints", "Points de compétence (côté client)" },
             { "Reset", "Réinitialiser" },
-            { "LanguageLabel", "Langue" },
+            // { "LanguageLabel", "Langue" },
             { "NoPlayerDamage", "Pas de dégâts de joueur (client-side)" },
             { "ManipulateAtmosphere", "Manipuler l'atmosphère (côté hôte)" },
             { "ShipTemperature", "Température du vaisseau (côté hôte)" },
@@ -32,7 +32,10 @@ namespace Achaman.Localization
             { "DisableProgress", "Désactiver la progression" },
             { "DebugConsole", "Console de débogage (encore en état beta)" },
             { "ExecuteCommand", "Exécuter la commande" },
-            { "RemoveMutatorLimit", "Supprimer la limite de modificateur (côté hôte)" }
+            { "RemoveMutatorLimit", "Supprimer la limite de modificateur (côté hôte)" },
+            { "ConsoleToggleKeyLabel", "Touche de d'ouverture de la console" },
+            { "PressAnyKeyLabel", "Appuyez sur n'importe quelle touche..." },
+            { "ChangeKeyButtonLabel", "Changer la touche" }
         };
 
         public string Get(string key)

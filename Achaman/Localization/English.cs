@@ -14,7 +14,7 @@ namespace Achaman.Localization
             { "JetpackNote", "Note: This must be configured in the Hub to take effect." },
             { "PerkPoints", "Perk points (client-side)" },
             { "Reset", "Reset" },
-            { "LanguageLabel", "Language" },
+            // { "LanguageLabel", "Language" },
             { "NoPlayerDamage", "No player damage (client-side)" },
             { "ManipulateAtmosphere", "Manipulate atmosphere (host-side)" },
             { "ShipTemperature", "Ship Temperature (host-side)" },
@@ -32,7 +32,10 @@ namespace Achaman.Localization
             { "DisableProgress", "Disable Progress" },
             { "DebugConsole", "Debug Console (Still in beta state)" },
             { "ExecuteCommand", "Execute Command" },
-            { "RemoveMutatorLimit", "Remove Mutator Limit (host-side)" }
+            { "RemoveMutatorLimit", "Remove Mutator Limit (host-side)" },
+            { "ConsoleToggleKeyLabel", "Console Toggle Key" },
+            { "PressAnyKeyLabel", "Press any key..." },
+            { "ChangeKeyButtonLabel", "Change Key" }
         };
 
         public string Get(string key)
