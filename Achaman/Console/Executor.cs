@@ -8,6 +8,7 @@ using UnityEngine;
 // Focus text field (again) when console is opened
 // Find a way to prevent keys input from being processed by the game when the console is open
 // Setup a centralized general key binding system that can be used anywhere in the plugin
+// IMPORTANT TODO: Disable key bindings when the game chat is open
 namespace Achaman.Console
 {
     public static class Executor

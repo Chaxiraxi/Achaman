@@ -14,6 +14,12 @@ namespace Achaman
     [BepInDependency(MyPluginInfo.PLUGIN_GUID)]
     public class AchamanPlugin : BaseUnityPlugin
     {
+        // This is the master switch to enable or disable the legit mode of the mod.
+        // If set to true, the mod will disable progression features and remove some functionalities.
+        // If set to false, the mod will allow progression and all functionalities, leading to an unfair gameplay experience.
+        // But you know, it's your choice.
+        // The Thunderstore version of the mod will always have this set to true.
+        // The GitHub version of the mod will have this set to false by default, and let the user choose whether to enable it or not by compiling the mod himself.
         public const bool SHOULD_DISABLE_PROGRESS = false;
 
         internal static new ManualLogSource Logger;
