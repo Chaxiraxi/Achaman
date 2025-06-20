@@ -28,7 +28,7 @@ namespace Achaman.Console
 
         void OnGUI()
         {
-            if (!IsVisible || SettingsGUI.isProgressDisabled) return;
+            if (!IsVisible || !SettingsGUI.isProgressDisabled) return;
 
             // Initialize windowRect to 35% of screen size, only once
             if (!initialized)
