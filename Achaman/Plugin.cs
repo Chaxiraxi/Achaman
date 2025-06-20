@@ -57,7 +57,7 @@ namespace Achaman
 
     public class VoidManagerPlugin : VoidPlugin
     {
-        public override MultiplayerType MPType => MultiplayerType.Host;
+        public override MultiplayerType MPType => AchamanPlugin.LEGIT_MODE ? MultiplayerType.Host : MultiplayerType.Unmanaged;
         public override string Author => PluginInfo.PLUGIN_AUTHORS;
         public override string Description => PluginInfo.PLUGIN_DESCRIPTION;
         // public override string ThunderstoreID => PluginInfo.PLUGIN_THUNDERSTORE_ID;
