@@ -17,7 +17,7 @@ namespace Achaman.Console
         public ParameterInfo[] Parameters { get; set; }
     }
 
-    public static class DebugConsoleCommandCollector
+    public static class ConsoleCommandCollector
     {
         /// <summary>
         /// Collects all console commands from the current AppDomain.
@@ -147,7 +147,7 @@ internal static class AdditionalCommands
     {
         if (allCommands == null)
         {
-            allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
+            allCommands = ConsoleCommandCollector.CollectConsoleCommands();
         }
 
         var helpText = new List<string>();

@@ -25,7 +25,7 @@ namespace Achaman.Console
         {
             if (allCommands == null)
             {
-                allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
+                allCommands = ConsoleCommandCollector.CollectConsoleCommands();
             }
 
             // Merge quoted arguments into single arguments and remove quotes
@@ -104,7 +104,7 @@ namespace Achaman.Console
         public static string GetAutoComplete(string input)
         {
             if (allCommands == null)
-                allCommands = DebugConsoleCommandCollector.CollectConsoleCommands();
+                allCommands = ConsoleCommandCollector.CollectConsoleCommands();
 
             var tokens = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
