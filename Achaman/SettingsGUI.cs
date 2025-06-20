@@ -8,7 +8,7 @@ namespace Achaman
 {
     class SettingsGUI : ModSettingsMenu
     {
-        private static bool isProgressDisabled = false;
+        public static bool isProgressDisabled { get; private set; } = !AchamanPlugin.LEGIT_MODE;
         public override string Name() { return PluginInfo.PLUGIN_NAME + " Settings"; }
         private bool waitingForKeyPress = false;
 
@@ -25,7 +25,7 @@ namespace Achaman
             if (Button("Italian")) Language.SetLanguage(new Italian());
 
             // Disables progression to keep the game fair.
-            if (!isProgressDisabled && AchamanPlugin.SHOULD_DISABLE_PROGRESS)
+            if (!isProgressDisabled)
             {
                 Label(Language.Current.Get("HostOnly"));
                 if (!VoidManagerPlugin.isHosting) return;
@@ -47,7 +47,7 @@ namespace Achaman
             Settings.NoJetpackOxygenDepletion = Toggle(Settings.NoJetpackOxygenDepletion, Language.Current.Get("NoJetpackOxygenDepletion"));
             Settings.NoBiomassDepletion = Toggle(Settings.NoBiomassDepletion, Language.Current.Get("NoBiomassDepletion"));
             Settings.RemoveMutatorLimit = Toggle(Settings.RemoveMutatorLimit, Language.Current.Get("RemoveMutatorLimit"));
-            if (!AchamanPlugin.SHOULD_DISABLE_PROGRESS) Settings.SpoofVanillaRoom = Toggle(Settings.SpoofVanillaRoom, Language.Current.Get("SpoofVanillaRoom"));
+            if (!AchamanPlugin.LEGIT_MODE) Settings.SpoofVanillaRoom = Toggle(Settings.SpoofVanillaRoom, Language.Current.Get("SpoofVanillaRoom"));
 
             Label(Language.Current.Get("MultiplyRecycledAlloy") + ": " + Settings.MultiplyRecycledAlloy);
             Settings.MultiplyRecycledAlloy = Mathf.Round(HorizontalSlider(Settings.MultiplyRecycledAlloy, 0f, 10f) * 10f) / 10f;

@@ -20,7 +20,7 @@ namespace Achaman
         // But you know, it's your choice.
         // The Thunderstore version of the mod will always have this set to true.
         // The GitHub version of the mod will have this set to false by default, and let the user choose whether to enable it or not by compiling the mod himself.
-        public const bool SHOULD_DISABLE_PROGRESS = false;
+        public const bool LEGIT_MODE = false;
 
         internal static new ManualLogSource Logger;
         public static AchamanPlugin Instance { get; private set; }
@@ -63,7 +63,7 @@ namespace Achaman
         public override SessionChangedReturn OnSessionChange(SessionChangedInput input)
         {
             isHosting = input.IsHost;
-            if (!isHosting && AchamanPlugin.SHOULD_DISABLE_PROGRESS) Settings.Reset();
+            if (!isHosting && AchamanPlugin.LEGIT_MODE) Settings.Reset();
 
             // Create a new GameObject for the ConsoleGUI and add the script to it
             if (consoleGameObject == null)

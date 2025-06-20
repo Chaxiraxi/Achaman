@@ -121,7 +121,7 @@ internal static class AdditionalCommands
                 },
             };
 
-        if (!AchamanPlugin.SHOULD_DISABLE_PROGRESS)
+        if (!AchamanPlugin.LEGIT_MODE)
         {
             commands.Add(new ConsoleCommandInfo
             {
