@@ -20,6 +20,10 @@ namespace Achaman
         // But you know, it's your choice.
         // The Thunderstore version of the mod will always have this set to true.
         // The GitHub version of the mod will have this set to false by default, and let the user choose whether to enable it or not by compiling the mod himself.
+        // Features that are disabled in LEGIT_MODE:
+        // - disable/enable progression console commands
+        // - SpoofVanillaRoom setting
+        // - Running the mod in multiplayer with progression enabled
         public const bool LEGIT_MODE = false;
 
         internal static new ManualLogSource Logger;
