@@ -233,7 +233,7 @@ namespace Achaman.Console
         /// <returns>The results of the command executions</returns>
         public static string CheckKeyBindings()
         {
-            if (ConsoleGUI.IsVisible || SettingsGUI.isProgressDisabled) return string.Empty; // Prevent execution when progress is not disabled
+            if (ConsoleGUI.IsVisible || !SettingsGUI.isProgressDisabled) return string.Empty; // Prevent execution when progress is not disabled
             List<string> results = new List<string>();
 
             // Check each key in the keyBindings dictionary
